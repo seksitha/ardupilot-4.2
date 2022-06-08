@@ -217,6 +217,7 @@ public:
     friend class ModeZigZag;
     friend class ModeAutorotate;
     friend class ModeTurtle;
+    friend class AC_WPNav;
 
     Copter(void);
 

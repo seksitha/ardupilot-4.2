@@ -118,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     bionic64.vm.box = "ubuntu/bionic64"
     bionic64.vm.provision :shell, path: "Tools/vagrant/initvagrant.sh"
     bionic64.vm.provider "virtualbox" do |vb|
-      vb.name = "ArduPilot (bionic64)"
+      vb.name = "ArduPilot (ubuntu)"
     end
   end
 

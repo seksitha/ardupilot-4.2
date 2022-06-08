@@ -1,5 +1,6 @@
 #include <AP_HAL/AP_HAL.h>
 #include "AC_WPNav.h"
+#include "../ArduCopter/Copter.h"
 
 extern const AP_HAL::HAL& hal;
 
@@ -193,6 +194,7 @@ void AC_WPNav::wp_and_spline_init(float speed_cms, Vector3f stopping_point)
         get_wp_stopping_point(stopping_point);
     }
     _origin = _destination = stopping_point;
+    _origin.z = _destination.z = stopping_point.z = _wpnav_new_alt;
     _terrain_alt = false;
     _this_leg_is_spline = false;
 
@@ -283,7 +285,7 @@ bool AC_WPNav::get_wp_destination_loc(Location& destination) const
     return true;
 }
 
-/// set_wp_destination - set destination waypoints using position vectors (distance from ekf origin in cm)
+/// set_wp_destination - set destination wcurr_deltaset_wp_origin_and_destinationaypoints using position vectors (distance from ekf origin in cm)
 ///     terrain_alt should be true if destination.z is an altitude above terrain (false if alt-above-ekf-origin)
 ///     returns false on failure (likely caused by missing terrain data)
 bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
@@ -328,10 +330,17 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
             _pos_control.set_pos_offset_z_cm(_pos_control.get_pos_offset_z_cm() - origin_terr_offset);
         }
     }
-
+    // _origin.z = _flags_change_alt_by_pilot ? _wpnav_new_alt : _origin.z < 1 ? 2 : _origin.z;
     // update destination
     _destination = destination;
     _terrain_alt = terrain_alt;
+    
+    // This code ensure the altitude changed stay the same through out the mssion
+    // _destination.z = _flags_change_alt_by_pilot ? _wpnav_new_alt : destination.z < 1 ? 2 : destination.z;
+
+    // reset clime alt and wait for pilot throttle cmd again
+    _pilot_clime_cm = 0.0f;
+    gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>ori %f, des %f, new %f", _origin.z, _destination.z, _wpnav_new_alt );
 
     if (_flags.fast_waypoint && !_this_leg_is_spline && !_next_leg_is_spline && !_scurve_next_leg.finished()) {
         _scurve_this_leg = _scurve_next_leg;
@@ -521,12 +530,41 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
     target_vel *= vel_scaler_dt;
     target_accel *= sq(vel_scaler_dt);
     target_accel += accel_offset;
-
+        /* ALT: Altitude*/
+    int32_t throttle_val = copter.channel_throttle->get_radio_in();
+    
+    // positive throttle
+    if (throttle_val > 1550 ){
+        if(!_flags_change_alt_by_pilot) _flags_change_alt_by_pilot = true;
+        // test with SITL carefull with throttle not come back to 1500
+        // limit height 20m up only Test with and next waypoint clime rate is set to 0 and if throttle not 1500 it will keep going up
+        _pilot_clime_cm < 2000 ? _pilot_clime_cm = (_pilot_clime_cm + ((float)throttle_val/5000)) : _pilot_clime_cm;
+    }
+    // negative throttle
+    else if (throttle_val < 1450  && throttle_val > 1000 /* SITL start at rc 3 1000*/ ){
+        if(!_flags_change_alt_by_pilot) _flags_change_alt_by_pilot = true;
+        // limit height -10monly
+        // test with SITL carefull with throttle not come back to 1500 and next waypoint clime rate is set to 0 and if throttle not 1500 it will keep going down
+        _pilot_clime_cm = (_pilot_clime_cm - 0.3);
+    }
+    // mid stick 
+    else if (throttle_val > 1450  && throttle_val < 1510){
+        // if we set like this, it is going to be reverted to original alt which copter stay at mission alt
+        // so this should comment out. 
+        // _pilot_clime_cm = 0.0f;
+        // _flags_change_alt_by_pilot= false;
+    }
     // convert final_target.z to altitude above the ekf origin
-    target_pos.z += _pos_control.get_pos_offset_z_cm();
+    target_pos.z += _pos_control.get_pos_offset_z_cm(); // offset is 0 most of the time.
+    
+    if(_flags_change_alt_by_pilot){
+        // target_pos.z = target_pos.z + _pilot_clime_cm;
+        // _wpnav_new_alt  = target_pos.z ;
+    }
+    gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f",target_pos.z);
     target_vel.z += _pos_control.get_vel_offset_z_cms();
     target_accel.z += _pos_control.get_accel_offset_z_cmss();
-
+   
     // pass new target to the position controller
     _pos_control.set_pos_vel_accel(target_pos.topostype(), target_vel, target_accel);
 

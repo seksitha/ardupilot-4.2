@@ -241,7 +241,10 @@ protected:
 
     float _last_wp_speed_cms;  // last recorded WPNAV_SPEED, used for changing speed in-flight
     float _last_wp_speed_up_cms;  // last recorded WPNAV_SPEED_UP, used for changing speed in-flight
-    float _last_wp_speed_down_cms;  // last recorded WPNAV_SPEED_DN, used for changing speed in-flight
+    float _last_wp_speed_down_cms;  // last recorded WPNAV_SPEED_DN, used for changing speed in-flight`
+    bool  _flags_change_alt_by_pilot = false;
+    float   _pilot_clime_cm = 0.00f;
+    float  _wpnav_new_alt = 0.00f;
 
     // scurve
     SCurve _scurve_prev_leg;            // previous scurve trajectory used to blend with current scurve trajectory
