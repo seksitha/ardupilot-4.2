@@ -592,6 +592,56 @@ void Copter::three_hz_loop()
 
     // check if avoidance should be enabled based on alt
     low_alt_avoidance();
+    
+     // read value of level sensor
+    if (RC_Channels::get_radio_in(9) > 1500){
+        //uint16_t flow_val = wp_nav->readFlowSensor(60);
+        uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
+        // uint16_t flow_val = hal.gpio->read(54); //       v5+
+
+        if (sensor_loop_index >= 25){
+            gcs().send_text(MAV_SEVERITY_INFO, "sensor val %i", flow_val);
+            sensor_loop_index = 0;
+        }
+        sensor_loop_index = sensor_loop_index + 1;
+    }
+
+    /*FLOWSENSOR */
+    if(get_mode()==3 && copter.mode_auto.cmd_16_index > 1){
+        // not to trigger the flow sensor at the beginning of the mission.
+        uint8_t delay_monitor_flow = 40;
+        if (copter.mode_auto.cmd_16_index % 2 != 0) {
+            mission_timer_not_to_monitor_flow_at_start_waypoint = 0;
+            return;
+        }
+        if( copter.mode_auto.cmd_16_index % 2 == 0  && mission_timer_not_to_monitor_flow_at_start_waypoint < delay_monitor_flow) {
+            mission_timer_not_to_monitor_flow_at_start_waypoint = mission_timer_not_to_monitor_flow_at_start_waypoint + 1;
+            return;
+        }
+        
+        // if empty tank stop copter
+        if (mission_timer_not_to_monitor_flow_at_start_waypoint >= delay_monitor_flow && RC_Channels::get_radio_in(6) > 1400 ){
+            uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
+            // uint16_t flow_val = hal.gpio->read(54); //       v5+
+            flow_value = flow_value + flow_val ;
+            // flow_value =  flow_value + flow_val;
+            uint8_t loop_counter_max = 4;
+            if ( flow_index >= loop_counter_max) {
+                if ( RC_Channels::get_radio_in(9) > 1400){
+                    gcs().send_text(MAV_SEVERITY_INFO, "flow val %i %i", flow_value/5, flow_val);
+                }
+                if ((flow_value/(loop_counter_max+1)) == 1 && !alert_empty_tank ){
+                    gcs().send_text(MAV_SEVERITY_CRITICAL, "Water Tank Empty");
+                    copter.set_mode(Mode::Number::LOITER, ModeReason::GCS_COMMAND);
+                    alert_empty_tank = true;
+                }
+                flow_value = 0;
+            }
+
+            flow_index = flow_index >= loop_counter_max ? 0 : flow_index+1;
+            
+        }
+    }
 }
 
 // one_hz_loop - runs at 1Hz

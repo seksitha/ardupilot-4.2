@@ -245,6 +245,21 @@ protected:
     bool  _flags_change_alt_by_pilot = false;
     float   _pilot_clime_cm = 0.00f;
     float  _wpnav_new_alt = 0.00f;
+        bool loiter_state_after_mission_completed = false;
+    bool break_auto_by_user_state = false;
+    AP_Float    _corect_coordinate_we;
+    AP_Float    _corect_coordinate_ns;
+    AP_Int8    _spray_all;
+    AP_Int8    _fast_turn;
+    AP_Int8    _sensor_pin;
+    AP_Int32   _pwm_nozzle;
+    AP_Int32   _pwm_pump;
+    AP_Int8    _has_oaradar;
+    AP_Int32   _yaw_oa_rate;
+    float      traveled_distance;
+    Location    origin_for_breakpoint;
+    int32_t wp_bearing;
+    AP_Int8    _radio_type;
 
     // scurve
     SCurve _scurve_prev_leg;            // previous scurve trajectory used to blend with current scurve trajectory

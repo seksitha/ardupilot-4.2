@@ -13,6 +13,8 @@ extern const AP_HAL::HAL& hal;
 #define WPNAV_WP_SPEED_UP               250.0f      // default maximum climb velocity
 #define WPNAV_WP_SPEED_DOWN             150.0f      // default maximum descent velocity
 #define WPNAV_WP_ACCEL_Z_DEFAULT        100.0f      // default vertical acceleration between waypoints in cm/s/s
+#define WPNAV_COORDINATE_WE             0.00f           
+#define WPNAV_COORDINATE_NS             0.00f   
 
 const AP_Param::GroupInfo AC_WPNav::var_info[] = {
     // index 0 was used for the old orientation matrix
@@ -194,9 +196,10 @@ void AC_WPNav::wp_and_spline_init(float speed_cms, Vector3f stopping_point)
         get_wp_stopping_point(stopping_point);
     }
     _origin = _destination = stopping_point;
-    _origin.z = _destination.z = stopping_point.z = _wpnav_new_alt;
+    _origin.z = _destination.z =  stopping_point.z;
     _terrain_alt = false;
     _this_leg_is_spline = false;
+    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>init %f", _origin.z);
 
     // initialise the terrain velocity to the current maximum velocity
     _offset_vel = _wp_desired_speed_xy_cms;
@@ -330,7 +333,7 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
             _pos_control.set_pos_offset_z_cm(_pos_control.get_pos_offset_z_cm() - origin_terr_offset);
         }
     }
-    // _origin.z = _flags_change_alt_by_pilot ? _wpnav_new_alt : _origin.z < 1 ? 2 : _origin.z;
+    // _origin.z = _flags_change_alt_by_pilot ? _wpnav_n ew_alt : _origin.z < 1 ? 2 : _origin.z;
     // update destination
     _destination = destination;
     _terrain_alt = terrain_alt;
@@ -339,8 +342,8 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
     // _destination.z = _flags_change_alt_by_pilot ? _wpnav_new_alt : destination.z < 1 ? 2 : destination.z;
 
     // reset clime alt and wait for pilot throttle cmd again
-    _pilot_clime_cm = 0.0f;
-    gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>ori %f, des %f, new %f", _origin.z, _destination.z, _wpnav_new_alt );
+    _pilot_clime_cm = 0.00f;
+    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>ori %f, des %f, new %f", _origin.z, _destination.z, _wpnav_new_alt );
 
     if (_flags.fast_waypoint && !_this_leg_is_spline && !_next_leg_is_spline && !_scurve_next_leg.finished()) {
         _scurve_this_leg = _scurve_next_leg;
@@ -541,7 +544,7 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
         _pilot_clime_cm < 2000 ? _pilot_clime_cm = (_pilot_clime_cm + ((float)throttle_val/5000)) : _pilot_clime_cm;
     }
     // negative throttle
-    else if (throttle_val < 1450  && throttle_val > 1000 /* SITL start at rc 3 1000*/ ){
+    else if (throttle_val < 1450  && throttle_val > 1005 /* SITL start at rc 3 1000*/ ){
         if(!_flags_change_alt_by_pilot) _flags_change_alt_by_pilot = true;
         // limit height -10monly
         // test with SITL carefull with throttle not come back to 1500 and next waypoint clime rate is set to 0 and if throttle not 1500 it will keep going down
@@ -558,10 +561,11 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
     target_pos.z += _pos_control.get_pos_offset_z_cm(); // offset is 0 most of the time.
     
     if(_flags_change_alt_by_pilot){
-        // target_pos.z = target_pos.z + _pilot_clime_cm;
-        // _wpnav_new_alt  = target_pos.z ;
+        target_pos.z = target_pos.z + _pilot_clime_cm;
+        _wpnav_new_alt  = target_pos.z;
+        _destination.z = target_pos.z;
     }
-    gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f",target_pos.z);
+    gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f, pilot %f",target_pos.z, _pos_control.get_pos_offset_z_cm());
     target_vel.z += _pos_control.get_vel_offset_z_cms();
     target_accel.z += _pos_control.get_accel_offset_z_cmss();
    
