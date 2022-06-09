@@ -95,6 +95,17 @@ const AP_Param::GroupInfo AC_WPNav::var_info[] = {
     // @Range: 0.1 100
     // @User: Advanced
     AP_GROUPINFO("TER_MARGIN",  12, AC_WPNav, _terrain_margin, 10.0),
+   
+    AP_GROUPINFO("COOR_WE",   13, AC_WPNav, _corect_coordinate_we, WPNAV_COORDINATE_WE),
+    AP_GROUPINFO("COOR_NS",   14, AC_WPNav, _corect_coordinate_ns, WPNAV_COORDINATE_NS),
+    AP_GROUPINFO("SPRAY_ALL",   15, AC_WPNav, _spray_all, 0),
+    AP_GROUPINFO("FAST_TURN",   16, AC_WPNav, _fast_turn, 0),
+    AP_GROUPINFO("PWM_NOZZLE",   17, AC_WPNav, _pwm_nozzle , 55),
+    AP_GROUPINFO("PWM_PUMP",   18, AC_WPNav, _pwm_pump , 25),
+    AP_GROUPINFO("SENSOR_PIN",   19, AC_WPNav, _sensor_pin , 60),
+    AP_GROUPINFO("HAS_OA_RD",   20, AC_WPNav, _has_oaradar , 0),
+    AP_GROUPINFO("RADIO_TYPE",   21, AC_WPNav, _radio_type , 10),
+    AP_GROUPINFO("YAW_OA",   22, AC_WPNav, _yaw_oa_rate , 150),
 
     AP_GROUPEND
 };
@@ -210,6 +221,11 @@ void AC_WPNav::wp_and_spline_init(float speed_cms, Vector3f stopping_point)
     _wp_last_update = AP_HAL::millis();
 }
 
+void AC_WPNav::reset_param_on_start_mission(){ // in case the drone land and new mission?
+    _flags_change_alt_by_pilot =false;
+    _pilot_clime_cm = 0.0f;
+}
+
 /// set_speed_xy - allows main code to pass target horizontal velocity for wp navigation
 void AC_WPNav::set_speed_xy(float speed_cms)
 {
@@ -288,6 +304,7 @@ bool AC_WPNav::get_wp_destination_loc(Location& destination) const
     return true;
 }
 
+
 /// set_wp_destination - set destination wcurr_deltaset_wp_origin_and_destinationaypoints using position vectors (distance from ekf origin in cm)
 ///     terrain_alt should be true if destination.z is an altitude above terrain (false if alt-above-ekf-origin)
 ///     returns false on failure (likely caused by missing terrain data)
@@ -338,6 +355,10 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
     _destination = destination;
     _terrain_alt = terrain_alt;
     
+    if(copter.mode_auto.mission.get_current_nav_index() >= 2 && copter.get_mode()!=6 ){ // not to do in RTL 
+        _destination.y = _destination.y+(_corect_coordinate_we * 100);
+        _destination.x = _destination.x+(_corect_coordinate_ns * 100);
+    }
     // This code ensure the altitude changed stay the same through out the mssion
     // _destination.z = _flags_change_alt_by_pilot ? _wpnav_new_alt : destination.z < 1 ? 2 : destination.z;
 
@@ -464,6 +485,33 @@ void AC_WPNav::get_wp_stopping_point(Vector3f& stopping_point) const
 /// advance_wp_target_along_track - move target location along track from origin to destination
 bool AC_WPNav::advance_wp_target_along_track(float dt)
 {
+    /* BREAKPOINT resuming when empty tank*/
+    if(copter.mode_auto.mission.state() != 0){ // we don't want code to run at RTL because it use wpnav controller too
+        if(copter.mode_auto.mission.get_current_nav_index() == 1){
+            copter.mode_auto.mission.get_item(copter.mode_auto.mission.num_commands() - 1,copter.current_mission_waypoint_finish_point);
+        }
+        copter.ahrs.get_position(copter.mission_breakpoint); // assigning current post to mission_breakpoint
+        copter.current_mission_length = copter.mode_auto.mission.num_commands(); // total command + 1
+        copter.current_mission_index = copter.mode_auto.mission.get_current_nav_index();
+        //if (copter.mode_auto.mission.get_current_nav_index() > 1 ) {
+            //traveled_distance = get_traveled_distance(); // TODO break more than 2 time in the same mission will cause the travel distance short
+            //gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>cover %i", get_wp_bearing_origin_destination());
+            //wp_bearing = get_wp_bearing_origin_destination();
+        //}
+    }
+
+    /* PUMPSPINNER speed change detector: pump and spinner only at spray time or will spray all the time */
+    if(_radio_type == 12){
+        if(copter.rc6_pwm != _pwm_pump){
+            if (copter.mode_auto.cmd_16_index % 2 == 0 && copter.mode_auto.cmd_16_index > 1&& copter.mode_auto.mission.state()==1) copter.set_pump_spinner_pwm(true);
+        }
+    }else{
+        if (copter.rc6_pwm != RC_Channels::get_radio_in(5) or copter.rc8_pwm != RC_Channels::get_radio_in(7) ){
+            if (copter.mode_auto.cmd_16_index % 2 == 0 && copter.mode_auto.cmd_16_index > 1&& copter.mode_auto.mission.state()==1) copter.set_pump_spinner_pwm(true);
+        }
+
+    }
+    
     // calculate terrain adjustments
     float terr_offset = 0.0f;
     if (_terrain_alt && !get_terrain_offset(terr_offset)) {

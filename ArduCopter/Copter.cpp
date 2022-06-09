@@ -551,6 +551,18 @@ void Copter::ten_hz_logging_loop()
         g2.winch.write_log();
     }
 #endif
+    // read value of level sensor
+    if (RC_Channels::get_radio_in(9) > 1500){
+        //uint16_t flow_val = wp_nav->readFlowSensor(60);
+        uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
+        // uint16_t flow_val = hal.gpio->read(54); //       v5+
+
+        if (sensor_loop_index >= 25){
+            gcs().send_text(MAV_SEVERITY_INFO, "sensor val %i", flow_val);
+            sensor_loop_index = 0;
+        }
+        sensor_loop_index = sensor_loop_index + 1;
+    }
 }
 
 // twentyfive_hz_logging - should be run at 25hz
@@ -571,7 +583,28 @@ void Copter::twentyfive_hz_logging()
     }
 #endif
 }
-
+void Copter::set_pump_spinner_pwm(bool spray_state){
+    if( spray_state == false) {
+        SRV_Channels::set_output_pwm_chan( chan_pump , 1000);
+        SRV_Channels::set_output_pwm_chan( chan_spinner , 1000);
+        //gcs().send_text(MAV_SEVERITY_INFO, "spray off");
+    }
+    if(spray_state == true){
+        if(wp_nav->_radio_type == 12){
+            SRV_Channels::set_output_pwm_chan( chan_pump , RC_Channels::get_radio_in(5) > 1080 ? wp_nav->_pwm_pump < 100 ? wp_nav->_pwm_pump*10+1000 : 1950 : 1000);
+            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm = RC_Channels::get_radio_in(7) > 1080 ? wp_nav->_pwm_nozzle < 100 ? wp_nav->_pwm_nozzle *10+1000: 1950 : 1000 );
+        }else{
+            if (rc6_pwm != RC_Channels::get_radio_in(5) or rc8_pwm != RC_Channels::get_radio_in(7) ){
+                rc6_pwm = RC_Channels::get_radio_in(5);
+                rc8_pwm = RC_Channels::get_radio_in(7) > wp_nav->_pwm_nozzle*10+1000 ? wp_nav->_pwm_nozzle*10+1000 : RC_Channels::get_radio_in(7);
+            }
+            SRV_Channels::set_output_pwm_chan( chan_pump , rc6_pwm);
+            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm);    
+        }
+        
+        //gcs().send_text(MAV_SEVERITY_INFO, "spray on");
+    }
+}
 // three_hz_loop - 3.3hz loop
 void Copter::three_hz_loop()
 {
@@ -592,19 +625,6 @@ void Copter::three_hz_loop()
 
     // check if avoidance should be enabled based on alt
     low_alt_avoidance();
-    
-     // read value of level sensor
-    if (RC_Channels::get_radio_in(9) > 1500){
-        //uint16_t flow_val = wp_nav->readFlowSensor(60);
-        uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
-        // uint16_t flow_val = hal.gpio->read(54); //       v5+
-
-        if (sensor_loop_index >= 25){
-            gcs().send_text(MAV_SEVERITY_INFO, "sensor val %i", flow_val);
-            sensor_loop_index = 0;
-        }
-        sensor_loop_index = sensor_loop_index + 1;
-    }
 
     /*FLOWSENSOR */
     if(get_mode()==3 && copter.mode_auto.cmd_16_index > 1){
@@ -642,6 +662,148 @@ void Copter::three_hz_loop()
             
         }
     }
+    // SPRAY speed update
+    if(!chan_pump){
+        SRV_Channels::find_channel(SRV_Channel::k_sprayer_pump,chan_pump);
+    }
+    if(!chan_spinner){
+        SRV_Channels::find_channel(SRV_Channel::k_sprayer_spinner,chan_spinner);
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>chanel_pum %i", chan_spinner);
+    }
+    //​ Avoid calibrate pump esc
+    if(RC_Channels::get_radio_in(6) /*chanel 7 switch*/ < 1600 && !pump_off_on_boot){
+        pump_off_on_boot = true;
+    }
+    // switch the pump on by RC
+    if (copter.get_mode()!=3 /*not auto*/ && chan_pump && chan_spinner && pump_off_on_boot){
+        if (RC_Channels::get_radio_in(6) > 1500){
+            uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5 pin 60
+            // uint16_t flow_val = hal.gpio->read(54); //       v5+
+            if(flow_val == 0){
+                set_pump_spinner_pwm(true);
+            }else{
+                set_pump_spinner_pwm(false); 
+            }
+        } else {
+            set_pump_spinner_pwm(false);         
+        }
+    }
+    // gcs().send_text(MAV_SEVERITY_INFO, "_______missionState %i ",mode_auto.mission.state());
+    /*(Done) misison complete loiter and stop spray*/ 
+    if(mode_auto.mission.state() == 2 and wp_nav->loiter_state_after_mission_completed == false){
+        copter.set_mode(Mode::Number::LOITER, ModeReason::GCS_COMMAND);
+        set_pump_spinner_pwm(false);   
+        wp_nav->loiter_state_after_mission_completed = true;
+    }
+    // stop spray on RTL when has water
+    if(copter.get_mode()==6 && motors->armed()){
+        set_pump_spinner_pwm(false);   
+    }
+    // 
+    // MISSIONBREAKPOINT code start here.
+    if( copter.get_mode() == 3 && mode_auto.mission.mission_uploaded_success_state ){
+        mode_auto.mission.mission_uploaded_success_state = false;
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => ___________breakpoint hit1");
+    }
+
+    /* BREAKPOINT resuming when empty tank*/
+    // TEST case A, upload mission -> stop -> continue, stop @ wp 2, 3, 5, 7 then land 
+    // hit resume, then fly auto -> hit loiter immediately -> hit auto see where it go.
+    // wait till wp 5 -> land -> resume -> download plan
+    // TEST case B: fly auto , stop at wp 4 and start again will spray at that point?
+    if( !motors->armed() && mode_auto.mission.num_commands() &&  mode_auto.mission.mission_uploaded_success_state == true)
+    {   
+        // get new mission finish location after resume command hit
+        mavlink_mission_item_int_t new_mission_finish_point ;
+        mode_auto.mission.get_item(mode_auto.mission.num_commands()-1, new_mission_finish_point);
+        // get new mission wapypoint #2 location after resume command hit
+        mavlink_mission_item_int_t new_mission_waypoint_2 ;
+        mode_auto.mission.get_item(2, new_mission_waypoint_2);
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => new %i", new_mission_waypoint_2.x);
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => old %i", mission_breakpoint.lat);
+        
+        /* WE SET breakpoint only if the end point is the same with new upload plan 
+        and the length is sorter than the old one otherwise we can not upload new mission when 
+        user make mistake*/
+        if( current_mission_waypoint_finish_point.x == new_mission_finish_point.x && 
+            current_mission_waypoint_finish_point.y == new_mission_finish_point.y &&
+            mode_auto.mission.num_commands() < current_mission_length )
+        {
+            // gcs().send_text(MAV_SEVERITY_INFO, "sitha=> resume success %i",mode_auto.cmd_16_index );
+
+            // TODO: this algorithm problem at the near of the end wp breakpoint
+            // float PI = 3.14159265f;
+            // float R = 6378137.0f; // Sitha: Earth radius in meter
+            // float half_radian = 180.0f;
+            
+            // // devide by 10+e7 won't work well but multiply by 0.00000001 work well
+            // float lat = (float)(wp_nav->origin_for_breakpoint.lat * 0.0000001f) * PI / half_radian; //convert degree to radian
+            // float lon = (float)(wp_nav->origin_for_breakpoint.lng * 0.0000001f) * PI / half_radian;
+            
+            // float brng = (float)(wp_nav->wp_bearing)*0.01f * PI / half_radian;
+            // float d = /*wp_nav->traveled_distance<400 && wp_nav->_fast_turn ? 0.0f :*/  (wp_nav->traveled_distance-70)*0.01f;
+            // float newLat = asinf(sinf(lat) * cosf(d / R) + cosf(lat) * sinf(d / R) * cosf(brng));
+            // float newLon = lon + atan2f(sinf(brng) * sinf(d / R) * cosf(lat), cosf(d / R) - sinf(lat) * sinf(newLat));
+            // float latDegree = newLat * half_radian / PI;
+            // float lonDegree = newLon * half_radian / PI; // result as radian so convert back to degree
+            // new_mission_waypoint_2.x = (int32_t)(latDegree*10000000);
+            // new_mission_waypoint_2.y = (int32_t)(lonDegree*10000000);    
+            // gcs().send_text(MAV_SEVERITY_INFO, "sitha=> resume lat %f, %f brng %f", (float)(wp_nav->origin_for_breakpoint.lat*.0000001f), (float)(wp_nav->origin_for_breakpoint.lng*0.0000001f),(float)wp_nav->wp_bearing*0.01f);
+            
+            // TODO: calculate offset lat x metters and offset lng x meters // work well, better than above dont know why.
+            float R = 6378137.00000000f;
+            float dlat = wp_nav->_corect_coordinate_ns/R;
+            float dlon = wp_nav->_corect_coordinate_we/(R*cosf(3.14150000f*(float)mission_breakpoint.lat/10000000/180.00000000f));
+            float correct_breakpoint_lat = ((float)mission_breakpoint.lat/10000000-(dlat*180/3.14150000f));
+            float correct_breakpoint_lng = ((float)mission_breakpoint.lng/10000000)-((dlon*180/3.14150000f));
+            new_mission_waypoint_2.x = int32_t(correct_breakpoint_lat*10000000);
+            new_mission_waypoint_2.y = (int32_t)(correct_breakpoint_lng*10000000);
+            
+            // in case pilot stop at the side turn don't set break point QGC will take out this wp
+            if(mode_auto.cmd_16_index % 2 == 0 || wp_nav->_spray_all==1){
+                mode_auto.mission.set_item(2, new_mission_waypoint_2 ); 
+            } 
+            // we set this to false so that it is not doing it again and again 
+            // and when we upload it is not reset out mission
+            mode_auto.mission.mission_uploaded_success_state = false;
+            mode_auto.cmd_16_index= 0; // don't change this will effect resume waypoint at side turn
+            current_mission_index = 0;
+        }
+    }
+    
+    // MISSION break by user and resume / this prevent user fly to somewhere and decide to resume so it resume to breakpoint
+    if(mode_auto.mission.get_current_nav_index() > 1 && copter.get_mode()!=3 && motors->armed()){
+        wp_nav->break_auto_by_user_state = true;
+    }
+    
+    // if (motors->armed() && copter.get_mode()!=3 /*not equal auto*/
+    //     && mode_auto.mission.state() == 0 
+    //     && current_mission_index >= 3 && wp_nav->break_auto_by_user_state == true)
+    // {
+        
+        // Stop implement go to breakpoint when user stop or sensor problem. 
+        // TODO: should be an option if user wanted to incase sensor problem
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => _________breakpoint success");
+        
+        // mavlink_mission_item_int_t current_waypoint ;
+        // mode_auto.mission.get_item(current_mission_index-1, current_waypoint);
+        // current_waypoint.x = mission_breakpoint.lat;
+        // current_waypoint.y = mission_breakpoint.lng;
+        // mode_auto.mission.set_item(current_mission_index-1, current_waypoint);
+        // mode_auto.mission.set_current_cmd(current_mission_index-1);
+    //     wp_nav->break_auto_by_user_state = false; // help not to set cmd_16_index + 1 so continue spray
+    // }
+    
+    if(copter.get_mode()!=3 /*not = auto*/ ){
+        // mode_auto.cmd_16_index = 0; // set this will make break by user no spray untill land
+        if(!motors->armed()) { // prevent on take off set current waypoint the old user break point
+            wp_nav->break_auto_by_user_state = false;
+            wp_nav->reset_param_on_start_mission();
+            wp_nav->loiter_state_after_mission_completed = false;
+        }
+    }
+    // MISSIONBREAKPOINT code end here.
+    // 
 }
 
 // one_hz_loop - runs at 1Hz

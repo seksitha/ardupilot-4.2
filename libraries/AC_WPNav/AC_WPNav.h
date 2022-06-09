@@ -209,7 +209,23 @@ public:
     float crosstrack_error() const { return _pos_control.crosstrack_error();}
 
     static const struct AP_Param::GroupInfo var_info[];
-
+    AP_Int8     _sensor_pin;
+    AP_Float    _corect_coordinate_we;
+    AP_Float    _corect_coordinate_ns;
+    AP_Int8     _spray_all;
+    AP_Int8     _fast_turn;
+    bool        _flags_change_alt_by_pilot = false;
+    float       _pilot_clime_cm = 0.00f;
+    float       _wpnav_new_alt = 0.00f;
+    float       traveled_distance;
+    Location    origin_for_breakpoint;
+    int32_t     wp_bearing;
+    AP_Int8     _radio_type;
+    bool        loiter_state_after_mission_completed = false;
+    bool        break_auto_by_user_state = false;
+    AP_Int32    _pwm_nozzle;
+    AP_Int32    _pwm_pump;
+    void reset_param_on_start_mission();
 protected:
 
     // flags structure
@@ -219,6 +235,8 @@ protected:
         uint8_t wp_yaw_set              : 1;    // true if yaw target has been set
     } _flags;
 
+    AP_Int8    _has_oaradar;
+    AP_Int32   _yaw_oa_rate;
     // helper function to calculate scurve jerk and jerk_time values
     // updates _scurve_jerk and _scurve_snap
     void calc_scurve_jerk_and_snap();
@@ -242,24 +260,6 @@ protected:
     float _last_wp_speed_cms;  // last recorded WPNAV_SPEED, used for changing speed in-flight
     float _last_wp_speed_up_cms;  // last recorded WPNAV_SPEED_UP, used for changing speed in-flight
     float _last_wp_speed_down_cms;  // last recorded WPNAV_SPEED_DN, used for changing speed in-flight`
-    bool  _flags_change_alt_by_pilot = false;
-    float   _pilot_clime_cm = 0.00f;
-    float  _wpnav_new_alt = 0.00f;
-        bool loiter_state_after_mission_completed = false;
-    bool break_auto_by_user_state = false;
-    AP_Float    _corect_coordinate_we;
-    AP_Float    _corect_coordinate_ns;
-    AP_Int8    _spray_all;
-    AP_Int8    _fast_turn;
-    AP_Int8    _sensor_pin;
-    AP_Int32   _pwm_nozzle;
-    AP_Int32   _pwm_pump;
-    AP_Int8    _has_oaradar;
-    AP_Int32   _yaw_oa_rate;
-    float      traveled_distance;
-    Location    origin_for_breakpoint;
-    int32_t wp_bearing;
-    AP_Int8    _radio_type;
 
     // scurve
     SCurve _scurve_prev_leg;            // previous scurve trajectory used to blend with current scurve trajectory

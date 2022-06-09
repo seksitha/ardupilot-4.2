@@ -405,7 +405,7 @@ public:
     bool allows_arming(AP_Arming::Method method) const override;
     bool is_autopilot() const override { return true; }
     bool in_guided_mode() const override { return mode() == SubMode::NAVGUIDED || mode() == SubMode::NAV_SCRIPT_TIME; }
-
+    int16_t cmd_16_index = 0;
     // Auto modes
     enum class SubMode : uint8_t {
         TAKEOFF,

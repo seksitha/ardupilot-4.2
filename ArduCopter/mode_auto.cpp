@@ -522,7 +522,9 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
     if (copter.should_log(MASK_LOG_CMD)) {
         copter.logger.Write_Mission_Cmd(mission, cmd);
     }
-
+    if(cmd.index == 1){
+        cmd_16_index = 0;
+    }
     switch(cmd.id) {
 
     ///
@@ -1235,7 +1237,22 @@ void ModeAuto::do_nav_wp(const AP_Mission::Mission_Command& cmd)
     loiter_time = 0;
     // this is the delay, stored in seconds
     loiter_time_max = cmd.p1;
+    if(!wp_nav->break_auto_by_user_state) {
+        cmd_16_index++; // cmd-16-index is 0 at start so need to pluse one
+    }
+    gcs().send_text(MAV_SEVERITY_INFO, "_______index %i",cmd_16_index);
+    if(wp_nav->_spray_all){
+        if(cmd_16_index >1) copter.set_pump_spinner_pwm(true);
+    }else{
+        if (cmd_16_index % 2 == 0 && cmd_16_index > 1 && mission.state()==1 ) {
+            copter.set_pump_spinner_pwm(true);
+        } 
+        if (cmd_16_index % 2 != 0 || mission.state()==0)  {
+            copter.set_pump_spinner_pwm(false);
+        }
+    }
 
+    wp_nav->break_auto_by_user_state = false;
     // set next destination if necessary
     if (!set_next_wp(cmd, dest_loc)) {
         // failure to set next destination can only be because of missing terrain data
@@ -1655,6 +1672,7 @@ void ModeAuto::do_payload_place(const AP_Mission::Mission_Command& cmd)
 void ModeAuto::do_RTL(void)
 {
     // start rtl in auto flight mode
+    wp_nav->reset_param_on_start_mission();
     rtl_start();
 }
 
