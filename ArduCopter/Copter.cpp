@@ -587,7 +587,7 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
     if( spray_state == false) {
         SRV_Channels::set_output_pwm_chan( chan_pump , 1000);
         SRV_Channels::set_output_pwm_chan( chan_spinner , 1000);
-        //gcs().send_text(MAV_SEVERITY_INFO, "spray off");
+        // gcs().send_text(MAV_SEVERITY_INFO, "spray off");
     }
     if(spray_state == true){
         if(wp_nav->_radio_type == 12){
@@ -602,7 +602,7 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
             SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm);    
         }
         
-        //gcs().send_text(MAV_SEVERITY_INFO, "spray on");
+        // gcs().send_text(MAV_SEVERITY_INFO, "spray on");
     }
 }
 // three_hz_loop - 3.3hz loop
@@ -720,7 +720,7 @@ void Copter::three_hz_loop()
         mavlink_mission_item_int_t new_mission_waypoint_2 ;
         mode_auto.mission.get_item(2, new_mission_waypoint_2);
         // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => new %i", new_mission_waypoint_2.x);
-        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => old %i", mission_breakpoint.lat);
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => old %i", current_mission_waypoint_finish_point.x);
         
         /* WE SET breakpoint only if the end point is the same with new upload plan 
         and the length is sorter than the old one otherwise we can not upload new mission when 

@@ -354,8 +354,8 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
     // update destination
     _destination = destination;
     _terrain_alt = terrain_alt;
-    
-    if(copter.mode_auto.mission.get_current_nav_index() >= 2 && copter.get_mode()!=6 ){ // not to do in RTL 
+    // get_current_index 1 is takeoff 2 is waypoint
+    if(copter.mode_auto.mission.get_current_nav_index() > 1 /*not takeoff*/ && copter.get_mode()!=6 ){ // not to do in RTL 
         _destination.y = _destination.y+(_corect_coordinate_we * 100);
         _destination.x = _destination.x+(_corect_coordinate_ns * 100);
     }
@@ -364,7 +364,7 @@ bool AC_WPNav::set_wp_destination(const Vector3f& destination, bool terrain_alt)
 
     // reset clime alt and wait for pilot throttle cmd again
     _pilot_clime_cm = 0.00f;
-    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>ori %f, des %f, new %f", _origin.z, _destination.z, _wpnav_new_alt );
+   
 
     if (_flags.fast_waypoint && !_this_leg_is_spline && !_next_leg_is_spline && !_scurve_next_leg.finished()) {
         _scurve_this_leg = _scurve_next_leg;
@@ -396,8 +396,12 @@ bool AC_WPNav::set_wp_destination_next(const Vector3f& destination, bool terrain
     if (terrain_alt != _terrain_alt) {
         return true;
     }
-
-    _scurve_next_leg.calculate_track(_destination, destination,
+    Vector3f next_dest = destination;
+    if(copter.mode_auto.mission.get_current_nav_index() > 1 /*not takeoff*/ && copter.get_mode()!=6 ){ // not to do in RTL 
+        next_dest.y = next_dest.y+(_corect_coordinate_we * 100);
+        next_dest.x = next_dest.x+(_corect_coordinate_ns * 100);
+    }
+    _scurve_next_leg.calculate_track(_destination, next_dest,
                                      _pos_control.get_max_speed_xy_cms(), _pos_control.get_max_speed_up_cms(), _pos_control.get_max_speed_down_cms(),
                                      _wp_accel_cmss, _wp_accel_z_cmss,
                                      _scurve_snap * 100.0f, _scurve_jerk * 100.0);
@@ -487,7 +491,7 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
 {
     /* BREAKPOINT resuming when empty tank*/
     if(copter.mode_auto.mission.state() != 0){ // we don't want code to run at RTL because it use wpnav controller too
-        if(copter.mode_auto.mission.get_current_nav_index() == 1){
+        if(copter.mode_auto.mission.get_current_nav_index() == 2){ //get the last waypoint location.
             copter.mode_auto.mission.get_item(copter.mode_auto.mission.num_commands() - 1,copter.current_mission_waypoint_finish_point);
         }
         copter.ahrs.get_position(copter.mission_breakpoint); // assigning current post to mission_breakpoint
@@ -495,7 +499,7 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
         copter.current_mission_index = copter.mode_auto.mission.get_current_nav_index();
         //if (copter.mode_auto.mission.get_current_nav_index() > 1 ) {
             //traveled_distance = get_traveled_distance(); // TODO break more than 2 time in the same mission will cause the travel distance short
-            //gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>cover %i", get_wp_bearing_origin_destination());
+            // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>cover %i",copter.current_mission_waypoint_finish_point.x);
             //wp_bearing = get_wp_bearing_origin_destination();
         //}
     }
@@ -613,7 +617,7 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
         _wpnav_new_alt  = target_pos.z;
         _destination.z = target_pos.z;
     }
-    gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f, pilot %f",target_pos.z, _pos_control.get_pos_offset_z_cm());
+    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f, pilot %f",target_pos.z, _pos_control.get_pos_offset_z_cm());
     target_vel.z += _pos_control.get_vel_offset_z_cms();
     target_accel.z += _pos_control.get_accel_offset_z_cmss();
    
