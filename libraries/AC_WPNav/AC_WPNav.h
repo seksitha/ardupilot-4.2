@@ -225,6 +225,7 @@ public:
     bool        break_auto_by_user_state = false;
     AP_Int32    _pwm_nozzle;
     AP_Int32    _pwm_pump;
+    uint8_t      wpnav_pos_loop = 0;
     void reset_param_on_start_mission();
 protected:
 

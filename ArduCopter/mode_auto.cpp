@@ -522,6 +522,8 @@ bool ModeAuto::start_command(const AP_Mission::Mission_Command& cmd)
     if (copter.should_log(MASK_LOG_CMD)) {
         copter.logger.Write_Mission_Cmd(mission, cmd);
     }
+    copter.alert_empty_tank = false;
+    wp_nav->loiter_state_after_mission_completed = false;
     if(cmd.index == 1){
         cmd_16_index = 0;
     }

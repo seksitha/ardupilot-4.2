@@ -617,7 +617,11 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
         _wpnav_new_alt  = target_pos.z;
         _destination.z = target_pos.z;
     }
-    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f, pilot %f",target_pos.z, _pos_control.get_pos_offset_z_cm());
+    if(wpnav_pos_loop > 250){ 
+        gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f",target_pos.z);
+        wpnav_pos_loop = 0;
+    }
+    wpnav_pos_loop +=1;
     target_vel.z += _pos_control.get_vel_offset_z_cms();
     target_accel.z += _pos_control.get_accel_offset_z_cmss();
    

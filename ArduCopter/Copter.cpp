@@ -551,18 +551,6 @@ void Copter::ten_hz_logging_loop()
         g2.winch.write_log();
     }
 #endif
-    // read value of level sensor
-    if (RC_Channels::get_radio_in(9) > 1500){
-        //uint16_t flow_val = wp_nav->readFlowSensor(60);
-        uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
-        // uint16_t flow_val = hal.gpio->read(54); //       v5+
-
-        if (sensor_loop_index >= 25){
-            gcs().send_text(MAV_SEVERITY_INFO, "sensor val %i", flow_val);
-            sensor_loop_index = 0;
-        }
-        sensor_loop_index = sensor_loop_index + 1;
-    }
 }
 
 // twentyfive_hz_logging - should be run at 25hz
@@ -583,28 +571,7 @@ void Copter::twentyfive_hz_logging()
     }
 #endif
 }
-void Copter::set_pump_spinner_pwm(bool spray_state){
-    if( spray_state == false) {
-        SRV_Channels::set_output_pwm_chan( chan_pump , 1000);
-        SRV_Channels::set_output_pwm_chan( chan_spinner , 1000);
-        // gcs().send_text(MAV_SEVERITY_INFO, "spray off");
-    }
-    if(spray_state == true){
-        if(wp_nav->_radio_type == 12){
-            SRV_Channels::set_output_pwm_chan( chan_pump , RC_Channels::get_radio_in(5) > 1080 ? wp_nav->_pwm_pump < 100 ? wp_nav->_pwm_pump*10+1000 : 1950 : 1000);
-            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm = RC_Channels::get_radio_in(7) > 1080 ? wp_nav->_pwm_nozzle < 100 ? wp_nav->_pwm_nozzle *10+1000: 1950 : 1000 );
-        }else{
-            if (rc6_pwm != RC_Channels::get_radio_in(5) or rc8_pwm != RC_Channels::get_radio_in(7) ){
-                rc6_pwm = RC_Channels::get_radio_in(5);
-                rc8_pwm = RC_Channels::get_radio_in(7) > wp_nav->_pwm_nozzle*10+1000 ? wp_nav->_pwm_nozzle*10+1000 : RC_Channels::get_radio_in(7);
-            }
-            SRV_Channels::set_output_pwm_chan( chan_pump , rc6_pwm);
-            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm);    
-        }
-        
-        // gcs().send_text(MAV_SEVERITY_INFO, "spray on");
-    }
-}
+
 // three_hz_loop - 3.3hz loop
 void Copter::three_hz_loop()
 {
@@ -614,10 +581,10 @@ void Copter::three_hz_loop()
     // check if we've lost terrain data
     failsafe_terrain_check();
 
-#if AC_FENCE == ENABLED
-    // check if we have breached a fence
-    fence_check();
-#endif // AC_FENCE_ENABLED
+    #if AC_FENCE == ENABLED
+        // check if we have breached a fence
+        fence_check();
+    #endif // AC_FENCE_ENABLED
 
 
     // update ch6 in flight tuning
@@ -625,43 +592,7 @@ void Copter::three_hz_loop()
 
     // check if avoidance should be enabled based on alt
     low_alt_avoidance();
-
-    /*FLOWSENSOR */
-    if(get_mode()==3 && copter.mode_auto.cmd_16_index > 1){
-        // not to trigger the flow sensor at the beginning of the mission.
-        uint8_t delay_monitor_flow = 40;
-        if (copter.mode_auto.cmd_16_index % 2 != 0) {
-            mission_timer_not_to_monitor_flow_at_start_waypoint = 0;
-            return;
-        }
-        if( copter.mode_auto.cmd_16_index % 2 == 0  && mission_timer_not_to_monitor_flow_at_start_waypoint < delay_monitor_flow) {
-            mission_timer_not_to_monitor_flow_at_start_waypoint = mission_timer_not_to_monitor_flow_at_start_waypoint + 1;
-            return;
-        }
-        
-        // if empty tank stop copter
-        if (mission_timer_not_to_monitor_flow_at_start_waypoint >= delay_monitor_flow && RC_Channels::get_radio_in(6) > 1400 ){
-            uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
-            // uint16_t flow_val = hal.gpio->read(54); //       v5+
-            flow_value = flow_value + flow_val ;
-            // flow_value =  flow_value + flow_val;
-            uint8_t loop_counter_max = 4;
-            if ( flow_index >= loop_counter_max) {
-                if ( RC_Channels::get_radio_in(9) > 1400){
-                    gcs().send_text(MAV_SEVERITY_INFO, "flow val %i %i", flow_value/5, flow_val);
-                }
-                if ((flow_value/(loop_counter_max+1)) == 1 && !alert_empty_tank ){
-                    gcs().send_text(MAV_SEVERITY_CRITICAL, "Water Tank Empty");
-                    copter.set_mode(Mode::Number::LOITER, ModeReason::GCS_COMMAND);
-                    alert_empty_tank = true;
-                }
-                flow_value = 0;
-            }
-
-            flow_index = flow_index >= loop_counter_max ? 0 : flow_index+1;
-            
-        }
-    }
+    
     // SPRAY speed update
     if(!chan_pump){
         SRV_Channels::find_channel(SRV_Channel::k_sprayer_pump,chan_pump);
@@ -674,9 +605,9 @@ void Copter::three_hz_loop()
     if(RC_Channels::get_radio_in(6) /*chanel 7 switch*/ < 1600 && !pump_off_on_boot){
         pump_off_on_boot = true;
     }
-    // switch the pump on by RC
+    // switch the pump on-off by RC
     if (copter.get_mode()!=3 /*not auto*/ && chan_pump && chan_spinner && pump_off_on_boot){
-        if (RC_Channels::get_radio_in(6) > 1500){
+        if (RC_Channels::get_radio_in(6) > 1600){
             uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5 pin 60
             // uint16_t flow_val = hal.gpio->read(54); //       v5+
             if(flow_val == 0){
@@ -796,19 +727,65 @@ void Copter::three_hz_loop()
     
     if(copter.get_mode()!=3 /*not = auto*/ ){
         // mode_auto.cmd_16_index = 0; // set this will make break by user no spray untill land
+        wp_nav->reset_param_on_start_mission();
         if(!motors->armed()) { // prevent on take off set current waypoint the old user break point
             wp_nav->break_auto_by_user_state = false;
-            wp_nav->reset_param_on_start_mission();
             wp_nav->loiter_state_after_mission_completed = false;
         }
     }
     // MISSIONBREAKPOINT code end here.
-    // 
+        /*LEVEL SENSOR */
+    if(get_mode()==3 && copter.mode_auto.cmd_16_index > 1){
+        // not to trigger the flow sensor at the beginning of the mission.
+        uint8_t delay_monitor_flow = 9;
+        if (copter.mode_auto.cmd_16_index % 2 != 0) {
+            mission_timer_not_to_monitor_flow_at_start_waypoint = 0;
+            return;
+        }
+        if( copter.mode_auto.cmd_16_index % 2 == 0  && mission_timer_not_to_monitor_flow_at_start_waypoint < delay_monitor_flow) {
+            mission_timer_not_to_monitor_flow_at_start_waypoint = mission_timer_not_to_monitor_flow_at_start_waypoint + 1;
+            return;
+        }
+        
+        // if empty tank stop copter
+        if (mission_timer_not_to_monitor_flow_at_start_waypoint >= delay_monitor_flow && RC_Channels::get_radio_in(9) < 1400 ){
+            uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
+            // uint16_t flow_val = hal.gpio->read(54); //       v5+
+            flow_value = flow_value + flow_val ;
+            // flow_value =  flow_value + flow_val;
+            uint8_t loop_counter_max = 1;
+            
+            if ( flow_index >= loop_counter_max) {
+                if ((flow_value/(loop_counter_max+1)) == 1 && !alert_empty_tank ){
+                    gcs().send_text(MAV_SEVERITY_CRITICAL, "Water Tank Empty");
+                    copter.set_mode(Mode::Number::LOITER, ModeReason::GCS_COMMAND);
+                    alert_empty_tank = true;
+                }
+                flow_value = 0;
+            }
+
+            flow_index = flow_index >= loop_counter_max ? 0 : flow_index+1;
+            
+        }
+    }
 }
 
 // one_hz_loop - runs at 1Hz
 void Copter::one_hz_loop()
 {
+    // Test value of level sensor
+    if (RC_Channels::get_radio_in(9) > 1500){
+        //uint16_t flow_val = wp_nav->readFlowSensor(60);
+        uint16_t flow_val = hal.gpio->read(wp_nav->_sensor_pin); // nano  v5
+        // uint16_t flow_val = hal.gpio->read(54); //       v5+
+
+        if (sensor_loop_index >= 1){
+            gcs().send_text(MAV_SEVERITY_INFO, "sensor val %i", flow_val);
+            sensor_loop_index = 0;
+        }
+        sensor_loop_index = sensor_loop_index + 1;
+    }
+    
     if (should_log(MASK_LOG_ANY)) {
         Log_Write_Data(LogDataID::AP_STATE, ap.value);
     }
@@ -841,6 +818,29 @@ void Copter::one_hz_loop()
 #endif
 
     AP_Notify::flags.flying = !ap.land_complete;
+}
+
+void Copter::set_pump_spinner_pwm(bool spray_state){
+    if( spray_state == false) {
+        SRV_Channels::set_output_pwm_chan( chan_pump , 1000);
+        SRV_Channels::set_output_pwm_chan( chan_spinner , 1000);
+        // gcs().send_text(MAV_SEVERITY_INFO, "spray off");
+    }
+    if(spray_state == true){
+        if(wp_nav->_radio_type == 12){
+            SRV_Channels::set_output_pwm_chan( chan_pump , RC_Channels::get_radio_in(5) > 1080 ? wp_nav->_pwm_pump < 100 ? wp_nav->_pwm_pump*10+1000 : 1950 : 1000);
+            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm = RC_Channels::get_radio_in(7) > 1080 ? wp_nav->_pwm_nozzle < 100 ? wp_nav->_pwm_nozzle *10+1000: 1950 : 1000 );
+        }else{
+            if (rc6_pwm != RC_Channels::get_radio_in(5) or rc8_pwm != RC_Channels::get_radio_in(7) ){
+                rc6_pwm = RC_Channels::get_radio_in(5);
+                rc8_pwm = RC_Channels::get_radio_in(7) > wp_nav->_pwm_nozzle*10+1000 ? wp_nav->_pwm_nozzle*10+1000 : RC_Channels::get_radio_in(7);
+            }
+            SRV_Channels::set_output_pwm_chan( chan_pump , rc6_pwm);
+            SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm);    
+        }
+        
+        // gcs().send_text(MAV_SEVERITY_INFO, "spray on");
+    }
 }
 
 void Copter::init_simple_bearing()
