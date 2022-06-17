@@ -725,7 +725,7 @@ void Copter::three_hz_loop()
     //     wp_nav->break_auto_by_user_state = false; // help not to set cmd_16_index + 1 so continue spray
     // }
     
-    if(copter.get_mode()!=3 /*not = auto*/ ){
+    if(copter.get_mode()!=3 /*not = auto*/ && copter.get_mode()!=6 /*not rtl or pilot_clime is not working*/){
         // mode_auto.cmd_16_index = 0; // set this will make break by user no spray untill land
         wp_nav->reset_param_on_start_mission();
         if(!motors->armed()) { // prevent on take off set current waypoint the old user break point
@@ -828,8 +828,18 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
     }
     if(spray_state == true){
         if(wp_nav->_radio_type == 12){
-            SRV_Channels::set_output_pwm_chan( chan_pump , RC_Channels::get_radio_in(5) > 1080 ? wp_nav->_pwm_pump < 100 ? wp_nav->_pwm_pump*10+1000 : 1950 : 1000);
+            if(RC_Channels::get_radio_in(5) > 1600){
+                rc6_pwm =  wp_nav->_pwm_pump < 60 ? (wp_nav->_pwm_pump + 30) * 10 + 1000 : 2000;
+            }
+            else if(RC_Channels::get_radio_in(5) > 1150 && RC_Channels::get_radio_in(5) < 1550 ){
+                rc6_pwm = (wp_nav->_pwm_pump + 15) * 10 + 1000;
+            }
+            else if (RC_Channels::get_radio_in(5) < 1150){
+                 rc6_pwm = wp_nav->_pwm_pump * 10 + 1000;
+            } 
+            SRV_Channels::set_output_pwm_chan( chan_pump , rc6_pwm);
             SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm = RC_Channels::get_radio_in(7) > 1080 ? wp_nav->_pwm_nozzle < 100 ? wp_nav->_pwm_nozzle *10+1000: 1950 : 1000 );
+        
         }else{
             if (rc6_pwm != RC_Channels::get_radio_in(5) or rc8_pwm != RC_Channels::get_radio_in(7) ){
                 rc6_pwm = RC_Channels::get_radio_in(5);

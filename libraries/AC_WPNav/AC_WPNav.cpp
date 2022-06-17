@@ -397,7 +397,7 @@ bool AC_WPNav::set_wp_destination_next(const Vector3f& destination, bool terrain
         return true;
     }
     Vector3f next_dest = destination;
-    if(copter.mode_auto.mission.get_current_nav_index() > 1 /*not takeoff*/ && copter.get_mode()!=6 ){ // not to do in RTL 
+    if(copter.mode_auto.mission.get_current_nav_index() > 1 /*not takeoff*/ && copter.get_mode()!=6 ){  
         next_dest.y = next_dest.y+(_corect_coordinate_we * 100);
         next_dest.x = next_dest.x+(_corect_coordinate_ns * 100);
     }
@@ -505,15 +505,8 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
     }
 
     /* PUMPSPINNER speed change detector: pump and spinner only at spray time or will spray all the time */
-    if(_radio_type == 12){
-        if(copter.rc6_pwm != _pwm_pump){
-            if (copter.mode_auto.cmd_16_index % 2 == 0 && copter.mode_auto.cmd_16_index > 1&& copter.mode_auto.mission.state()==1) copter.set_pump_spinner_pwm(true);
-        }
-    }else{
-        if (copter.rc6_pwm != RC_Channels::get_radio_in(5) or copter.rc8_pwm != RC_Channels::get_radio_in(7) ){
-            if (copter.mode_auto.cmd_16_index % 2 == 0 && copter.mode_auto.cmd_16_index > 1&& copter.mode_auto.mission.state()==1) copter.set_pump_spinner_pwm(true);
-        }
-
+    if (copter.rc6_pwm != RC_Channels::get_radio_in(5) or copter.rc8_pwm != RC_Channels::get_radio_in(7) ){
+        if (copter.mode_auto.cmd_16_index % 2 == 0 && copter.mode_auto.cmd_16_index > 1&& copter.mode_auto.mission.state()==1) copter.set_pump_spinner_pwm(true);
     }
     
     // calculate terrain adjustments
@@ -618,7 +611,7 @@ bool AC_WPNav::advance_wp_target_along_track(float dt)
         _destination.z = target_pos.z;
     }
     if(wpnav_pos_loop > 250){ 
-        gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f",target_pos.z);
+        // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => pos_z %f",target_pos.z);
         wpnav_pos_loop = 0;
     }
     wpnav_pos_loop +=1;

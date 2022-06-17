@@ -527,7 +527,7 @@ void ModeRTL::compute_return_target()
     if (g.rtl_cone_slope >= RTL_MIN_CONE_SLOPE) {
         target_alt = MAX(curr_alt, MIN(target_alt, MAX(rtl_return_dist_cm*g.rtl_cone_slope, curr_alt+RTL_ABS_MIN_CLIMB)));
     }
-
+    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: => rtl_z %i",target_alt);
     // set returned target alt to new target_alt (don't change altitude type)
     rtl_path.return_target.set_alt_cm(target_alt, (alt_type == ReturnTargetAltType::RELATIVE) ? Location::AltFrame::ABOVE_HOME : Location::AltFrame::ABOVE_TERRAIN);
 
