@@ -446,9 +446,11 @@ void ModeRTL::compute_return_target()
 {
     // set return target to nearest rally point or home position (Note: alt is absolute)
 #if AC_RALLY == ENABLED
+    gcs().send_text(MAV_SEVERITY_INFO, "sitha: => get_rally");   
     rtl_path.return_target = copter.rally.calc_best_rally_or_home_location(copter.current_loc, ahrs.get_home().alt);
 #else
     rtl_path.return_target = ahrs.get_home();
+     gcs().send_text(MAV_SEVERITY_INFO, "sitha: => get_home");
 #endif
 
     // curr_alt is current altitude above home or above terrain depending upon use_terrain
@@ -475,6 +477,7 @@ void ModeRTL::compute_return_target()
 
     // set curr_alt and return_target.alt from range finder
     if (alt_type == ReturnTargetAltType::RANGEFINDER) {
+        gcs().send_text(MAV_SEVERITY_INFO, "sitha: => rng_alt");
         if (copter.get_rangefinder_height_interpolated_cm(curr_alt)) {
             // set return_target.alt
             rtl_path.return_target.set_alt_cm(MAX(curr_alt + MAX(0, g.rtl_climb_min), MAX(g.rtl_altitude, RTL_ALT_MIN)), Location::AltFrame::ABOVE_TERRAIN);
@@ -488,6 +491,7 @@ void ModeRTL::compute_return_target()
 
     // set curr_alt and return_target.alt from terrain database
     if (alt_type == ReturnTargetAltType::TERRAINDATABASE) {
+        gcs().send_text(MAV_SEVERITY_INFO, "sitha: => ter_alt");
         // set curr_alt to current altitude above terrain
         // convert return_target.alt from an abs (above MSL) to altitude above terrain
         //   Note: the return_target may be a rally point with the alt set above the terrain alt (like the top of a building)
@@ -505,6 +509,7 @@ void ModeRTL::compute_return_target()
 
     // for the default case we must convert return-target alt (which is an absolute alt) to alt-above-home
     if (alt_type == ReturnTargetAltType::RELATIVE) {
+        gcs().send_text(MAV_SEVERITY_INFO, "sitha: => rel_alt");
         if (!rtl_path.return_target.change_alt_frame(Location::AltFrame::ABOVE_HOME)) {
             // this should never happen but just in case
             rtl_path.return_target.set_alt_cm(0, Location::AltFrame::ABOVE_HOME);
