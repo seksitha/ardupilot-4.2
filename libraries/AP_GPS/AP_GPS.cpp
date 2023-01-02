@@ -1975,16 +1975,17 @@ bool AP_GPS::is_healthy(uint8_t instance) const
     const uint8_t delay_threshold = 2;
     const float delay_avg_max = ((_type[instance] == GPS_TYPE_UBLOX_RTK_ROVER) || (_type[instance] == GPS_TYPE_UAVCAN_RTK_ROVER))?245:215;
     const GPS_timing &t = timing[instance];
+    
     bool delay_ok = (t.delayed_count < delay_threshold) &&
         t.average_delta_ms < delay_avg_max &&
         state[instance].lagged_sample_count < 5;
 
-#if defined(GPS_BLENDED_INSTANCE)
-    if (instance == GPS_BLENDED_INSTANCE) {
-        return delay_ok && blend_health_check();
-    }
-#endif
-
+    #if defined(GPS_BLENDED_INSTANCE)
+        if (instance == GPS_BLENDED_INSTANCE) {
+            return delay_ok && blend_health_check();
+        }
+    #endif
+    // gcs().send_text(MAV_SEVERITY_INFO, "sitha: =>delay %i, healthy %i",delay_ok ,drivers[instance]->is_healthy());
     return delay_ok && drivers[instance] != nullptr &&
            drivers[instance]->is_healthy();
 }

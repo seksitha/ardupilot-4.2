@@ -165,25 +165,25 @@ void ModeLoiter::run()
         // set motors to full range
         motors->set_desired_spool_state(AP_Motors::DesiredSpoolState::THROTTLE_UNLIMITED);
 
-#if PRECISION_LANDING == ENABLED
-        bool precision_loiter_old_state = _precision_loiter_active;
-        if (do_precision_loiter()) {
-            precision_loiter_xy();
-            _precision_loiter_active = true;
-        } else {
-            _precision_loiter_active = false;
-        }
-        if (precision_loiter_old_state && !_precision_loiter_active) {
-            // prec loiter was active, not any more, let's init again as user takes control
-            loiter_nav->init_target();
-        }
-        // run loiter controller if we are not doing prec loiter
-        if (!_precision_loiter_active) {
-            loiter_nav->update();
-        }
-#else
-        loiter_nav->update();
-#endif
+        #if PRECISION_LANDING == ENABLED
+                bool precision_loiter_old_state = _precision_loiter_active;
+                if (do_precision_loiter()) {
+                    precision_loiter_xy();
+                    _precision_loiter_active = true;
+                } else {
+                    _precision_loiter_active = false;
+                }
+                if (precision_loiter_old_state && !_precision_loiter_active) {
+                    // prec loiter was active, not any more, let's init again as user takes control
+                    loiter_nav->init_target();
+                }
+                // run loiter controller if we are not doing prec loiter
+                if (!_precision_loiter_active) {
+                    loiter_nav->update();
+                }
+        #else
+                loiter_nav->update();
+        #endif
 
         // call attitude controller
         attitude_control->input_thrust_vector_rate_heading(loiter_nav->get_thrust_vector(), target_yaw_rate, false);

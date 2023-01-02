@@ -1,0 +1,475 @@
+[ 10/482] Compiling libraries/AC_PID/AC_PI_2D.cpp
+[ 11/482] Compiling libraries/AC_PID/AC_PI.cpp
+[ 12/482] Compiling libraries/AC_PID/AC_HELI_PID.cpp
+[ 13/482] Compiling libraries/AC_PID/AC_PID_Basic.cpp
+[ 14/482] Compiling libraries/AC_PID/AC_PID_2D.cpp
+[ 15/482] Compiling libraries/AC_PID/AC_P_2D.cpp
+[ 16/482] Compiling libraries/AC_PID/AC_PID.cpp
+[ 17/482] Compiling libraries/AC_PID/AC_P_1D.cpp
+[ 18/482] Compiling libraries/AC_PID/AC_P.cpp
+[ 19/482] Compiling libraries/AP_AccelCal/AccelCalibrator.cpp
+[ 20/482] Compiling libraries/AP_AccelCal/AP_AccelCal.cpp
+[ 21/482] Compiling libraries/AP_Airspeed/AP_Airspeed_DLVR.cpp
+[ 22/482] Compiling libraries/AP_Airspeed/AP_Airspeed_ASP5033.cpp
+[ 23/482] Compiling libraries/AP_Airspeed/Airspeed_Calibration.cpp
+[ 24/482] Compiling libraries/AP_Airspeed/AP_Airspeed_analog.cpp
+[ 25/482] Compiling libraries/AP_Airspeed/AP_Airspeed_UAVCAN.cpp
+[ 26/482] Compiling libraries/AP_Airspeed/AP_Airspeed_SDP3X.cpp
+[ 27/482] Compiling libraries/AP_Airspeed/AP_Airspeed_MS5525.cpp
+[ 28/482] Compiling libraries/AP_Airspeed/AP_Airspeed_MS4525.cpp
+[ 29/482] Compiling libraries/AP_Airspeed/AP_Airspeed_Health.cpp
+[ 30/482] Compiling libraries/AP_Airspeed/AP_Airspeed_MSP.cpp
+[ 31/482] Compiling libraries/AP_Airspeed/AP_Airspeed_Backend.cpp
+[ 32/482] Compiling libraries/AP_Baro/AP_Baro_HIL.cpp
+[ 33/482] Compiling libraries/AP_Baro/AP_Baro_Dummy.cpp
+[ 34/482] Compiling libraries/AP_Baro/AP_Baro_BMP388.cpp
+[ 35/482] Compiling libraries/AP_Baro/AP_Baro_Wind.cpp
+[ 36/482] Compiling libraries/AP_Baro/AP_Baro_MSP.cpp
+[ 37/482] Compiling libraries/AP_Baro/AP_Baro_LPS2XH.cpp
+[ 38/482] Compiling libraries/AP_Baro/AP_Baro_ICM20789.cpp
+[ 39/482] Compiling libraries/AP_Baro/AP_Baro_KellerLD.cpp
+[ 40/482] Compiling libraries/AP_Baro/AP_Baro_Backend.cpp
+[ 41/482] Compiling libraries/AP_Baro/AP_Baro_Logging.cpp
+[ 42/482] Compiling libraries/AP_Baro/AP_Baro_MS5611.cpp
+[ 43/482] Compiling libraries/AP_Baro/AP_Baro_FBM320.cpp
+[ 44/482] Compiling libraries/AP_Baro/AP_Baro_DPS280.cpp
+[ 45/482] Compiling libraries/AP_Baro/AP_Baro_SPL06.cpp
+[ 46/482] Compiling libraries/AP_Baro/AP_Baro_UAVCAN.cpp
+[ 47/482] Compiling libraries/AP_Baro/AP_Baro_ExternalAHRS.cpp
+[ 48/482] Compiling libraries/AP_Baro/AP_Baro_BMP085.cpp
+[ 49/482] Compiling libraries/AP_Baro/AP_Baro_BMP280.cpp
+[ 50/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_ESC.cpp
+[ 51/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_FuelFlow.cpp
+[ 52/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_FuelLevel_PWM.cpp
+[ 53/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Generator.cpp
+[ 54/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_INA2xx.cpp
+[ 55/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_LTC2946.cpp
+[ 56/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Logging.cpp
+[ 57/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus.cpp
+[ 58/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Generic.cpp
+[ 59/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_NeoDesign.cpp
+[ 60/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Rotoye.cpp
+[ 61/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_SUI.cpp
+[ 62/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_SMBus_Solo.cpp
+[ 63/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Sum.cpp
+[ 64/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Torqeedo.cpp
+[ 65/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Analog.cpp
+[ 66/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_UAVCAN.cpp
+[ 67/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Backend.cpp
+[ 68/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Bebop.cpp
+[ 69/482] Compiling libraries/AP_BoardConfig/IMU_heater.cpp
+[ 70/482] Compiling libraries/AP_BoardConfig/board_drivers.cpp
+[ 71/482] Compiling libraries/AP_CANManager/AP_CANTester.cpp
+[ 72/482] Compiling libraries/AP_CANManager/AP_CANTester_KDECAN.cpp
+[ 73/482] Compiling libraries/AP_CANManager/AP_SLCANIface.cpp
+[ 74/482] Compiling libraries/AP_CANManager/AP_CANIfaceParams.cpp
+[ 75/482] Compiling libraries/AP_CANManager/AP_CANSensor.cpp
+[ 76/482] Compiling libraries/AP_Common/AP_Common.cpp
+[ 77/482] Compiling libraries/AP_Common/AP_ExpandingArray.cpp
+[ 78/482] Compiling libraries/AP_Common/AP_FWVersion.cpp
+[ 79/482] Compiling libraries/AP_Common/ExpandingString.cpp
+[ 80/482] Compiling libraries/AP_Common/Location.cpp
+[ 81/482] Compiling libraries/AP_Common/NMEA.cpp
+[ 82/482] Compiling libraries/AP_Common/c++.cpp
+[ 83/482] Compiling libraries/AP_Common/sorting.cpp
+[ 84/482] Compiling libraries/AP_Compass/AP_Compass_LIS3MDL.cpp
+[ 85/482] Compiling libraries/AP_Compass/AP_Compass_LSM303D.cpp
+[ 86/482] Compiling libraries/AP_Compass/AP_Compass_LSM9DS1.cpp
+[ 87/482] Compiling libraries/AP_Compass/AP_Compass_MAG3110.cpp
+[ 88/482] Compiling libraries/AP_Compass/AP_Compass_MMC3416.cpp
+[ 89/482] Compiling libraries/AP_Compass/AP_Compass_MMC5xx3.cpp
+[ 90/482] Compiling libraries/AP_Compass/AP_Compass_MSP.cpp
+[ 91/482] Compiling libraries/AP_Compass/AP_Compass_QMC5883L.cpp
+[ 92/482] Compiling libraries/AP_Compass/AP_Compass_RM3100.cpp
+[ 93/482] Compiling libraries/AP_Compass/AP_Compass_SITL.cpp
+[ 94/482] Compiling libraries/AP_Compass/AP_Compass_UAVCAN.cpp
+[ 95/482] Compiling libraries/AP_Compass/CompassCalibrator.cpp
+[ 96/482] Compiling libraries/AP_Compass/Compass_PerMotor.cpp
+[ 97/482] Compiling libraries/AP_Compass/Compass_learn.cpp
+[ 98/482] Compiling libraries/AP_Compass/AP_Compass_AK09916.cpp
+[ 99/482] Compiling libraries/AP_Compass/AP_Compass_AK8963.cpp
+[100/482] Compiling libraries/AP_Compass/AP_Compass_BMM150.cpp
+[101/482] Compiling libraries/AP_Compass/AP_Compass_Calibration.cpp
+[102/482] Compiling libraries/AP_Compass/AP_Compass_ExternalAHRS.cpp
+[103/482] Compiling libraries/AP_Compass/AP_Compass_HMC5843.cpp
+[104/482] Compiling libraries/AP_Compass/AP_Compass_IST8308.cpp
+[105/482] Compiling libraries/AP_Compass/AP_Compass_IST8310.cpp
+[106/482] Compiling libraries/AP_ESC_Telem/AP_ESC_Telem.cpp
+[107/482] Compiling libraries/AP_ESC_Telem/AP_ESC_Telem_Backend.cpp
+[108/482] Compiling libraries/AP_ESC_Telem/AP_ESC_Telem_SITL.cpp
+[109/482] Compiling libraries/AP_Filesystem/AP_Filesystem.cpp
+[110/482] Compiling libraries/AP_Filesystem/AP_Filesystem_ESP32.cpp
+[111/482] Compiling libraries/AP_Filesystem/AP_Filesystem_FATFS.cpp
+[112/482] Compiling libraries/AP_Filesystem/AP_Filesystem_Mission.cpp
+[113/482] Compiling libraries/AP_Filesystem/AP_Filesystem_Param.cpp
+[114/482] Compiling libraries/AP_Filesystem/AP_Filesystem_ROMFS.cpp
+[115/482] Compiling libraries/AP_Filesystem/AP_Filesystem_Sys.cpp
+[116/482] Compiling libraries/AP_Filesystem/AP_Filesystem_backend.cpp
+[117/482] Compiling libraries/AP_Filesystem/posix_compat.cpp
+[118/482] Compiling libraries/AP_FlashStorage/AP_FlashStorage.cpp
+[119/482] Compiling libraries/AP_GPS/AP_GPS_MAV.cpp
+[120/482] Compiling libraries/AP_GPS/AP_GPS_ExternalAHRS.cpp
+[121/482] Compiling libraries/AP_GPS/AP_GPS_GSOF.cpp
+[122/482] Compiling libraries/AP_GPS/AP_GPS_ERB.cpp
+[123/482] Compiling libraries/AP_GPS/AP_GPS.cpp
+[124/482] Compiling libraries/AP_GPS/AP_GPS_NMEA.cpp
+[125/482] Compiling libraries/AP_GPS/AP_GPS_NOVA.cpp
+[126/482] Compiling libraries/AP_GPS/AP_GPS_SBF.cpp
+[127/482] Compiling libraries/AP_GPS/AP_GPS_SBP.cpp
+[128/482] Compiling libraries/AP_GPS/AP_GPS_SBP2.cpp
+[129/482] Compiling libraries/AP_GPS/AP_GPS_SIRF.cpp
+[130/482] Compiling libraries/AP_GPS/AP_GPS_UAVCAN.cpp
+[131/482] Compiling libraries/AP_GPS/AP_GPS_UBLOX.cpp
+[132/482] Compiling libraries/AP_GPS/GPS_Backend.cpp
+[133/482] Compiling libraries/AP_GPS/AP_GPS_MSP.cpp
+[134/482] Compiling libraries/AP_GPS/MovingBase.cpp
+[135/482] Compiling libraries/AP_GPS/RTCM3_Parser.cpp
+[136/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_SITL.cpp
+[137/482] Compiling libraries/AP_InertialSensor/BatchSampler.cpp
+[138/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_LSM9DS0.cpp
+[139/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_LSM9DS1.cpp
+[140/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_L3G4200D.cpp
+[141/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_ADIS1647x.cpp
+[142/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_BMI270.cpp
+[143/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Invensense.cpp
+[144/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Backend.cpp
+[145/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Invensensev2.cpp
+[146/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Invensensev3.cpp
+[147/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_NONE.cpp
+[148/482] Compiling libraries/AP_InertialSensor/AuxiliaryBus.cpp
+[149/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_BMI160.cpp
+[150/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_BMI055.cpp
+[151/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_BMI088.cpp
+[152/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_tempcal.cpp
+[153/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_ExternalAHRS.cpp
+[154/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_Logging.cpp
+[155/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor_RST.cpp
+[156/482] Compiling libraries/AP_InternalError/AP_InternalError.cpp
+[157/482] Compiling libraries/AP_Logger/AP_Logger_Block.cpp
+[158/482] Compiling libraries/AP_Logger/LoggerMessageWriter.cpp
+[159/482] Compiling libraries/AP_Logger/AP_Logger_DataFlash.cpp
+[160/482] Compiling libraries/AP_Logger/LogFile.cpp
+[161/482] Compiling libraries/AP_Logger/AP_Logger_MAVLink.cpp
+[162/482] Compiling libraries/AP_Logger/AP_Logger_MAVLinkLogTransfer.cpp
+[163/482] Compiling libraries/AP_MSP/AP_MSP_Telem_DJI.cpp
+[164/482] Compiling libraries/AP_MSP/AP_MSP_Telem_DisplayPort.cpp
+[165/482] Compiling libraries/AP_MSP/AP_MSP_Telem_Generic.cpp
+[166/482] Compiling libraries/AP_MSP/msp.cpp
+[167/482] Compiling libraries/AP_MSP/AP_MSP_Telem_Backend.cpp
+[168/482] Compiling libraries/AP_MSP/AP_MSP.cpp
+[169/482] Compiling libraries/AP_MSP/msp_sbuf.cpp
+[170/482] Compiling libraries/AP_Math/location.cpp
+[171/482] Compiling libraries/AP_Math/location_double.cpp
+[172/482] Compiling libraries/AP_Math/SCurve.cpp
+[173/482] Compiling libraries/AP_Math/crc.cpp
+[174/482] Compiling libraries/AP_Math/quaternion.cpp
+[175/482] Compiling libraries/AP_Math/chirp.cpp
+[176/482] Compiling libraries/AP_Math/control.cpp
+[177/482] Compiling libraries/AP_Math/spline5.cpp
+[178/482] Compiling libraries/AP_Math/AP_Math.cpp
+[179/482] Compiling libraries/AP_Math/AP_GeodesicGrid.cpp
+[180/482] Compiling libraries/AP_Math/vector3.cpp
+[181/482] Compiling libraries/AP_Math/polyfit.cpp
+[182/482] Compiling libraries/AP_Math/polygon.cpp
+[183/482] Compiling libraries/AP_Math/matrix_alg.cpp
+[184/482] Compiling libraries/AP_Math/SplineCurve.cpp
+[185/482] Compiling libraries/AP_Math/matrixN.cpp
+[186/482] Compiling libraries/AP_Math/matrix3.cpp
+[187/482] Compiling libraries/AP_Math/vector2.cpp
+[188/482] Compiling libraries/AP_Notify/AP_Notify.cpp
+[189/482] Compiling libraries/AP_Notify/SerialLED.cpp
+[190/482] Compiling libraries/AP_Notify/NCP5623.cpp
+[191/482] Compiling libraries/AP_Notify/ToneAlarm.cpp
+[192/482] Compiling libraries/AP_Notify/VRBoard_LED.cpp
+[193/482] Compiling libraries/AP_Notify/Buzzer.cpp
+[194/482] Compiling libraries/AP_Notify/UAVCAN_RGB_LED.cpp
+[195/482] Compiling libraries/AP_Notify/AP_BoardLED2.cpp
+[196/482] Compiling libraries/AP_Notify/ToshibaLED_I2C.cpp
+[197/482] Compiling libraries/AP_Notify/DiscreteRGBLed.cpp
+[198/482] Compiling libraries/AP_Notify/DiscoLED.cpp
+[199/482] Compiling libraries/AP_Notify/AP_BoardLED.cpp
+[200/482] Compiling libraries/AP_Notify/Led_Sysfs.cpp
+[201/482] Compiling libraries/AP_Notify/Display_SSD1306_I2C.cpp
+[202/482] Compiling libraries/AP_Notify/MMLPlayer.cpp
+[203/482] Compiling libraries/AP_Notify/NeoPixel.cpp
+[204/482] Compiling libraries/AP_Notify/DShotLED.cpp
+[205/482] Compiling libraries/AP_Notify/Display_SITL.cpp
+[206/482] Compiling libraries/AP_Notify/ExternalLED.cpp
+[207/482] Compiling libraries/AP_Notify/Display.cpp
+[208/482] Compiling libraries/AP_Notify/NavigatorLED.cpp
+[209/482] Compiling libraries/AP_Notify/OreoLED_I2C.cpp
+[210/482] Compiling libraries/AP_Notify/PCA9685LED_I2C.cpp
+[211/482] Compiling libraries/AP_Notify/Display_SH1106_I2C.cpp
+[212/482] Compiling libraries/AP_Notify/PixRacerLED.cpp
+[213/482] Compiling libraries/AP_Notify/ScriptingLED.cpp
+[214/482] Compiling libraries/AP_Notify/SITL_SFML_LED.cpp
+[215/482] Compiling libraries/AP_Notify/ProfiLED.cpp
+[216/482] Compiling libraries/AP_Notify/RCOutputRGBLed.cpp
+[217/482] Compiling libraries/AP_Notify/RGBLed.cpp
+[218/482] Compiling libraries/AP_Param/AP_Param.cpp
+[219/482] Compiling libraries/AP_RAMTRON/AP_RAMTRON.cpp
+[220/482] Compiling libraries/AP_ROMFS/tinflate.cpp
+[221/482] Compiling libraries/AP_ROMFS/AP_ROMFS.cpp
+[222/482] Compiling libraries/AP_ROMFS/tinfgzip.cpp
+[223/482] Compiling libraries/AP_RTC/AP_RTC.cpp
+[224/482] Compiling libraries/AP_RTC/JitterCorrection.cpp
+[225/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_SITL.cpp
+[226/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MSP.cpp
+[227/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Wasp.cpp
+[228/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_UAVCAN.cpp
+[229/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_PulsedLightLRF.cpp
+[230/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarI2CXL.cpp
+[231/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MaxsonarSerialLV.cpp
+[232/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Params.cpp
+[233/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_PWM.cpp
+[234/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_TeraRangerI2C.cpp
+[235/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_analog.cpp
+[236/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_USD1_Serial.cpp
+[237/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_BBB_PRU.cpp
+[238/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LeddarOne.cpp
+[239/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_USD1_CAN.cpp
+[240/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Benewake.cpp
+[241/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_MAVLink.cpp
+[242/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.cpp
+[243/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LeddarVu8.cpp
+[244/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_VL53L0X.cpp
+[245/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LightWareI2C.cpp
+[246/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_LightWareSerial.cpp
+[247/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_GYUS42v2.cpp
+[248/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Lanbao.cpp
+[249/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_HC_SR04.cpp
+[250/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_NMEA.cpp
+[251/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Benewake_TFMiniPlus.cpp
+[252/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Benewake_CAN.cpp
+[253/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_BLPing.cpp
+[254/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Bebop.cpp
+[255/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Backend.cpp
+[256/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder_Backend_Serial.cpp
+[257/482] Compiling libraries/AP_SerialLED/AP_SerialLED.cpp
+[258/482] Compiling libraries/AP_SerialManager/AP_SerialManager.cpp
+[259/482] Compiling libraries/Filter/SlewLimiter.cpp
+[260/482] Compiling libraries/Filter/NotchFilter.cpp
+[261/482] Compiling libraries/Filter/DerivativeFilter.cpp
+[262/482] Compiling libraries/Filter/LowPassFilter2p.cpp
+[263/482] Compiling libraries/Filter/ModeFilter.cpp
+[264/482] Compiling libraries/Filter/LowPassFilter.cpp
+[265/482] Compiling libraries/Filter/HarmonicNotchFilter.cpp
+[266/482] Compiling libraries/SRV_Channel/SRV_Channel_aux.cpp
+[267/482] Compiling libraries/SRV_Channel/SRV_Channel.cpp
+[268/482] Compiling libraries/AP_HAL/utility/dsm.cpp
+[269/482] Compiling libraries/AP_HAL/utility/BetterStream.cpp
+[270/482] Compiling libraries/AP_HAL/GPIO.cpp
+[271/482] Compiling libraries/AP_HAL/utility/utoa_invert.cpp
+[272/482] Compiling libraries/AP_HAL/utility/RingBuffer.cpp
+[273/482] Compiling libraries/AP_HAL/utility/print_vprintf.cpp
+[274/482] Compiling libraries/AP_HAL/utility/RCOutput_Tap.cpp
+[275/482] Compiling libraries/AP_HAL/DSP.cpp
+[276/482] Compiling libraries/AP_HAL/system.cpp
+[277/482] Compiling libraries/AP_HAL/HAL.cpp
+[278/482] Compiling libraries/AP_HAL/Storage.cpp
+[279/482] Compiling libraries/AP_HAL/RCOutput.cpp
+[280/482] Compiling libraries/AP_HAL/utility/RCOutput_Tap_Linux.cpp
+[281/482] Compiling libraries/AP_HAL/Semaphores.cpp
+[282/482] Compiling libraries/AP_HAL/Scheduler.cpp
+[283/482] Compiling libraries/AP_HAL/utility/getopt_cpp.cpp
+[284/482] Compiling libraries/AP_HAL/EventHandle.cpp
+[285/482] Compiling libraries/AP_HAL/utility/Socket.cpp
+[286/482] Compiling libraries/AP_HAL/utility/replace.cpp
+[287/482] Compiling libraries/AP_HAL/Device.cpp
+[288/482] Compiling libraries/AP_HAL/utility/srxl.cpp
+[289/482] Compiling libraries/AP_HAL/CANIface.cpp
+[290/482] Compiling libraries/AP_HAL/utility/st24.cpp
+[291/482] Compiling libraries/AP_HAL/utility/sumd.cpp
+[292/482] Compiling libraries/AP_HAL/utility/ftoa_engine.cpp
+[293/482] Compiling libraries/AP_HAL/Util.cpp
+[294/482] Compiling libraries/AP_HAL/utility/packetise.cpp
+[295/482] Compiling libraries/AP_HAL_Empty/AnalogIn.cpp
+[296/482] Compiling libraries/AP_HAL_Empty/UARTDriver.cpp
+[297/482] Compiling libraries/AP_HAL_Empty/HAL_Empty_Class.cpp
+[298/482] Compiling libraries/AP_HAL_Empty/RCOutput.cpp
+[299/482] Compiling libraries/AP_HAL_Empty/Storage.cpp
+[300/482] Compiling libraries/AP_HAL_Empty/Scheduler.cpp
+[301/482] Compiling libraries/AP_HAL_Empty/Semaphores.cpp
+[302/482] Compiling libraries/AP_HAL_Empty/GPIO.cpp
+[303/482] Compiling libraries/AP_HAL_Empty/RCInput.cpp
+[304/482] Compiling libraries/AP_HAL_ChibiOS/CanIface.cpp
+[305/482] Compiling libraries/AP_HAL_ChibiOS/Scheduler.cpp
+[306/482] Compiling libraries/AP_HAL_ChibiOS/QSPIDevice.cpp
+[307/482] Compiling libraries/AP_HAL_ChibiOS/Device.cpp
+[308/482] Compiling libraries/AP_HAL_ChibiOS/AnalogIn.cpp
+[309/482] Compiling libraries/AP_HAL_ChibiOS/Semaphores.cpp
+[310/482] Compiling libraries/AP_HAL_ChibiOS/DSP.cpp
+[311/482] Compiling libraries/AP_HAL_ChibiOS/RCOutput_serial.cpp
+[312/482] Compiling libraries/AP_HAL_ChibiOS/SoftSigReader.cpp
+[313/482] Compiling libraries/AP_HAL_ChibiOS/I2CDevice.cpp
+[314/482] Compiling libraries/AP_HAL_ChibiOS/SPIDevice.cpp
+[315/482] Compiling libraries/AP_HAL_ChibiOS/RCInput.cpp
+[316/482] Compiling libraries/AP_HAL_ChibiOS/Util.cpp
+[317/482] Compiling libraries/AP_HAL_ChibiOS/RCOutput_bdshot.cpp
+[318/482] Compiling libraries/AP_HAL_ChibiOS/SoftSigReaderInt.cpp
+[319/482] Compiling libraries/AP_HAL_ChibiOS/UARTDriver.cpp
+[320/482] Compiling libraries/AP_HAL_ChibiOS/EventSource.cpp
+[321/482] Compiling libraries/AP_HAL_ChibiOS/CANFDIface.cpp
+[322/482] Compiling libraries/AP_HAL_ChibiOS/sdcard.cpp
+[323/482] Compiling libraries/AP_HAL_ChibiOS/shared_dma.cpp
+[324/482] Compiling libraries/AP_HAL_ChibiOS/stdio.cpp
+[325/482] Compiling libraries/AP_BoardConfig/AP_BoardConfig.cpp
+[326/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+[327/482] Compiling libraries/AP_BattMonitor/AP_BattMonitor.cpp
+[328/482] Compiling libraries/AP_CANManager/AP_CANManager.cpp
+[329/482] Compiling libraries/AP_CANManager/AP_CANDriver.cpp
+[330/482] Compiling libraries/StorageManager/StorageManager.cpp
+[331/482] Compiling libraries/AP_Compass/AP_Compass.cpp
+[332/482] Compiling libraries/AP_Compass/AP_Compass_Backend.cpp
+[333/482] Compiling libraries/AP_Baro/AP_Baro.cpp
+[334/482] Compiling libraries/AP_Baro/AP_Baro_SITL.cpp
+[335/482] Compiling libraries/AP_Airspeed/AP_Airspeed.cpp
+[336/482] Compiling libraries/AP_Airspeed/AP_Airspeed_NMEA.cpp
+[337/482] Compiling libraries/AP_RangeFinder/AP_RangeFinder.cpp
+[338/482] Compiling libraries/SRV_Channel/SRV_Channels.cpp
+[339/482] Compiling libraries/AP_Filesystem/AP_Filesystem_posix.cpp
+[340/482] Compiling libraries/AP_InertialSensor/AP_InertialSensor.cpp
+[341/482] Compiling libraries/AP_Logger/AP_Logger_Backend.cpp
+[342/482] Compiling libraries/AP_Logger/AP_Logger_File.cpp
+[343/482] Compiling libraries/AP_Logger/AP_Logger.cpp
+[344/482] Compiling libraries/AP_BLHeli/AP_BLHeli.cpp
+[345/482] Compiling libraries/AP_HAL_ChibiOS/RCOutput.cpp
+[346/482] Compiling libraries/AP_HAL_ChibiOS/GPIO.cpp
+[347/482] Compiling libraries/AP_HAL_ChibiOS/system.cpp
+[348/482] Compiling libraries/AP_HAL_ChibiOS/HAL_ChibiOS_Class.cpp
+[349/482] Compiling libraries/AP_HAL_ChibiOS/Storage.cpp
+[350/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.HardwareVersion.c
+[351/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GlobalTimeSync.c
+[352/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Path.c
+[353/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ice.FuelTankStatus.c
+[354/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.GetDirectoryEntryInfo_res.c
+[355/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.CANIfaceStats.c
+[356/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.gnss.Auxiliary.c
+[357/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.GetSet_res.c
+[358/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.RestartNode_req.c
+[359/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ahrs.MagneticFieldStrength.c
+[360/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.safety.ArmingStatus.c
+[361/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.gnss.Fix.c
+[362/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.gnss.ECEFPositionVelocity.c
+[363/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.camera_gimbal.GEOPOICommand.c
+[364/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.RestartNode_res.c
+[365/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.IndicatedAirspeed.c
+[366/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/com.hex.equipment.flow.Measurement.c
+[367/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.tunnel.Broadcast.c
+[368/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.indication.SafetyState.c
+[369/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/dronecan.sensors.hygrometer.Hygrometer.c
+[370/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Delete_res.c
+[371/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.power.CircuitStatus.c
+[372/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.NumericValue.c
+[373/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.equipment.trafficmonitor.TrafficReport.c
+[374/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.AngleOfAttack.c
+[375/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.NodeStatus.c
+[376/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.navigation.GlobalNavigationSolution.c
+[377/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetDataTypeInfo_res.c
+[378/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.device.Temperature.c
+[379/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.debug.LogLevel.c
+[380/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.Value.c
+[381/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/cuav.equipment.power.CBAT.c
+[382/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.RequestVote_req.c
+[383/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.AccessCommandShell_res.c
+[384/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/mppt.OutputEnable_req.c
+[385/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.enumeration.Begin_req.c
+[386/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.Timestamp.c
+[387/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.gnss.Fix2.c
+[388/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.StaticTemperature.c
+[389/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.GetInfo_req.c
+[390/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.AppendEntries_res.c
+[391/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.actuator.Command.c
+[392/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/mppt.Stream.c
+[393/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.indication.RGB565.c
+[394/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.gnss.MovingBaselineData.c
+[395/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ahrs.MagneticFieldStrength2.c
+[396/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.Entry.c
+[397/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetNodeInfo_req.c
+[398/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ahrs.RawIMU.c
+[399/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.enumeration.Begin_res.c
+[400/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.power.BatteryInfo.c
+[401/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.DataTypeKind.c
+[402/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/mppt.OutputEnable_res.c
+[403/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.Empty.c
+[404/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.enumeration.Indication.c
+[405/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.power.PrimaryPowerSupplyStatus.c
+[406/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.gnss.Status.c
+[407/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Error.c
+[408/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.Discovery.c
+[409/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.TrueAirspeed.c
+[410/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.RequestVote_res.c
+[411/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.gnss.RelPosHeading.c
+[412/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.Sideslip.c
+[413/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.actuator.Status.c
+[414/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetNodeInfo_res.c
+[415/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.esc.Status.c
+[416/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.range_sensor.Measurement.c
+[417/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.esc.RPMCommand.c
+[418/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetTransportStats_req.c
+[419/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetTransportStats_res.c
+[420/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.indication.Button.c
+[421/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.RawAirData.c
+[422/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.ExecuteOpcode_req.c
+[423/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.BeginFirmwareUpdate_res.c
+[424/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.EntryType.c
+[425/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.debug.LogMessage.c
+[426/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.hardpoint.Command.c
+[427/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ice.reciprocating.Status.c
+[428/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.CoarseOrientation.c
+[429/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.tunnel.Protocol.c
+[430/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Delete_req.c
+[431/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.tunnel.Call_req.c
+[432/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.indication.SingleLightCommand.c
+[433/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ice.reciprocating.CylinderStatus.c
+[434/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.GetSet_req.c
+[435/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.GetDirectoryEntryInfo_req.c
+[436/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.indication.BeepCommand.c
+[437/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.Panic.c
+[438/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Write_res.c
+[439/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.equipment.power.BatteryInfoAux.c
+[440/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.camera_gimbal.Mode.c
+[441/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Read_req.c
+[442/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.actuator.ArrayCommand.c
+[443/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.debug.KeyValue.c
+[444/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.ahrs.Solution.c
+[445/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.tunnel.Call_res.c
+[446/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.indication.NotifyState.c
+[447/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.camera_gimbal.AngularCommand.c
+[448/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.server.AppendEntries_req.c
+[449/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.camera_gimbal.Status.c
+[450/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.param.ExecuteOpcode_res.c
+[451/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Read_res.c
+[452/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.dynamic_node_id.Allocation.c
+[453/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.BeginFirmwareUpdate_req.c
+[454/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.air_data.StaticPressure.c
+[455/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/ardupilot.gnss.Heading.c
+[456/482] Compiling modules/DroneCAN/libcanard/canard.c
+[457/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.indication.LightsCommand.c
+[458/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.hardpoint.Status.c
+[459/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.SoftwareVersion.c
+[460/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.AccessCommandShell_req.c
+[461/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.Write_req.c
+[462/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.gnss.RTCMStream.c
+[463/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.GetDataTypeInfo_req.c
+[464/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.protocol.file.GetInfo_res.c
+[465/482] Compiling build/f103-GPS/modules/DroneCAN/libcanard/dsdlc_generated/src/uavcan.equipment.esc.RawCommand.c
+[466/482] Compiling Tools/AP_Periph/GCS_MAVLink.cpp
+[467/482] Compiling Tools/AP_Periph/Parameters.cpp
+[468/482] Compiling Tools/AP_Periph/version.cpp
+[469/482] Compiling Tools/AP_Periph/AP_Periph.cpp
+[470/482] Compiling Tools/AP_Periph/adsb.cpp
+[471/482] Compiling Tools/AP_Periph/hwing_esc.cpp
+[472/482] Compiling Tools/AP_Periph/msp.cpp
+[473/482] Compiling Tools/AP_Periph/rc_out.cpp
+[474/482] Compiling Tools/AP_Periph/can.cpp
+[475/482] Linking build/f103-GPS/Tools/AP_Periph/liblibcanard.a
+[476/482] Linking build/f103-GPS/lib/libAP_Periph_libs.a
+[477/482] Linking build/f103-GPS/bin/AP_Periph
+[478/482] Generating bin/AP_Periph.bin
+[479/482] app_descriptor build/f103-GPS/bin/AP_Periph.bin
+Applying MissionPlanner APP_DESCRIPTOR 8ad7acb86bec7ecd
+[480/482] apj_gen build/f103-GPS/bin/AP_Periph.bin
+[481/482] bin cleanup build/f103-GPS/bin/AP_Periph.bin
+[482/482] Generating bin/AP_Periph.hex
+Waf: Leaving directory `/mnt/d/002_Code/ardupilot/build/f103-GPS'

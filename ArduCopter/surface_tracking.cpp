@@ -44,10 +44,10 @@ void Copter::SurfaceTracking::update_surface_offset()
             reset_target = true;
         }
     }
-#else
-    copter.pos_control->set_pos_offset_z_cm(0);
-    copter.pos_control->set_pos_offset_target_z_cm(0);
-#endif
+    #else
+        copter.pos_control->set_pos_offset_z_cm(0);
+        copter.pos_control->set_pos_offset_target_z_cm(0);
+    #endif
 }
 
 

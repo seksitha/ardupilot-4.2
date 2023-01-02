@@ -824,10 +824,10 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
     if( spray_state == false) {
         SRV_Channels::set_output_pwm_chan( chan_pump , 1000);
         SRV_Channels::set_output_pwm_chan( chan_spinner , 1000);
-        // gcs().send_text(MAV_SEVERITY_INFO, "spray off");
+        //gcs().send_text(MAV_SEVERITY_INFO, "spray off");
     }
     if(spray_state == true){
-        if(wp_nav->_radio_type == 12){
+       if(wp_nav->_radio_type == 12){
             if(RC_Channels::get_radio_in(5) > 1600){
                 rc6_pwm =  wp_nav->_pwm_pump < 60 ? (wp_nav->_pwm_pump + 30) * 10 + 1000 : 2000;
             }
@@ -835,7 +835,7 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
                 rc6_pwm = (wp_nav->_pwm_pump + 15) * 10 + 1000;
             }
             else if (RC_Channels::get_radio_in(5) < 1150){
-                 rc6_pwm = wp_nav->_pwm_pump * 10 + 1000;
+                 rc6_pwm = 1000;
             } 
             SRV_Channels::set_output_pwm_chan( chan_pump , rc6_pwm);
             SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm = RC_Channels::get_radio_in(7) > 1080 ? wp_nav->_pwm_nozzle < 100 ? wp_nav->_pwm_nozzle *10+1000: 1950 : 1000 );
@@ -849,7 +849,7 @@ void Copter::set_pump_spinner_pwm(bool spray_state){
             SRV_Channels::set_output_pwm_chan( chan_spinner , rc8_pwm);    
         }
         
-        // gcs().send_text(MAV_SEVERITY_INFO, "spray on");
+        //gcs().send_text(MAV_SEVERITY_INFO, "spray on");
     }
 }
 

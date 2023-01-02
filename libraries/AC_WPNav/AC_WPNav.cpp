@@ -724,15 +724,15 @@ bool AC_WPNav::get_terrain_offset(float& offset_cm)
         }
         return false;
     case AC_WPNav::TerrainSource::TERRAIN_FROM_TERRAINDATABASE:
-#if AP_TERRAIN_AVAILABLE
-        float terr_alt = 0.0f;
-        AP_Terrain *terrain = AP::terrain();
-        if (terrain != nullptr &&
-            terrain->height_above_terrain(terr_alt, true)) {
-            offset_cm = _inav.get_position_z_up_cm() - (terr_alt * 100.0);
-            return true;
-        }
-#endif
+        #if AP_TERRAIN_AVAILABLE
+                float terr_alt = 0.0f;
+                AP_Terrain *terrain = AP::terrain();
+                if (terrain != nullptr &&
+                    terrain->height_above_terrain(terr_alt, true)) {
+                    offset_cm = _inav.get_position_z_up_cm() - (terr_alt * 100.0);
+                    return true;
+                }
+        #endif
         return false;
     }
 

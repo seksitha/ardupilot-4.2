@@ -69,7 +69,7 @@ void Storage::_storage_open(void)
     }
 
 #if !HAL_RAMTRON_ALLOW_FALLBACK
-    AP_HAL::panic("Unable to init RAMTRON storage");
+    AP_HAL::panic("Unable to init RAMTRON storage \n");
 #endif
 
 #endif // HAL_WITH_RAMTRON
@@ -114,7 +114,7 @@ void Storage::_storage_open(void)
 #endif
 
     if (_initialisedType != StorageBackend::None) {
-        ::printf("Initialised Storage type=%d\n", _initialisedType);
+        ::printf("=%d\n", _initialisedType);
     } else {
         AP_HAL::panic("Unable to init Storage backend");
     }

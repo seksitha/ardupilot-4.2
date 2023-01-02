@@ -27,7 +27,7 @@
 #include <AC_PID/AC_PID.h>
 #include <AP_AccelCal/AP_AccelCal.h>                // interface and maths for accelerometer calibration
 #include <AP_AHRS/AP_AHRS.h>                        // ArduPilot Mega DCM Library
-#include <AP_Baro/AP_Baro.h>
+// #include <AP_Baro/AP_Baro.h>
 #include <AP_BattMonitor/AP_BattMonitor.h>          // Battery monitor library
 #include <AP_Beacon/AP_Beacon.h>
 #include <AP_Camera/AP_Camera.h>                    // Camera triggering

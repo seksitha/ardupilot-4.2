@@ -2,16 +2,16 @@
 # MCU class and specific type
 MCU STM32H7xx STM32H743xx
 
-# crystal frequency
-OSCILLATOR_HZ 8000000
-
 # board ID for firmware load
 APJ_BOARD_ID 1036
+
+# crystal frequency, setup to use external oscillator
+OSCILLATOR_HZ 8000000
 
 FLASH_SIZE_KB 2048
 
 # with 2M flash we can afford to optimize for speed
-env OPTIMIZE -O2
+env OPTIMIZE -Os
 
 # ChibiOS system timer
 STM32_ST_USE_TIMER 2
@@ -54,7 +54,7 @@ PE12 IMU3_CS   CS
 PE3  BARO1_CS  CS
 PD7  BARO2_CS  CS   
 PA8  AT7456_CS CS
-PA10 FRAM_CS   CS    
+# PA10 FRAM_CS   CS    
 PC10 FLASH_CS  CS    
 PA15 ADIS16470_CS CS
 
@@ -155,9 +155,9 @@ SPIDEV imu2           SPI1 DEVID2  IMU2_CS      MODE3   2*MHZ    8*MHZ
 SPIDEV imu3           SPI1 DEVID3  IMU3_CS      MODE3   2*MHZ    8*MHZ
 SPIDEV baro1          SPI1 DEVID2  BARO1_CS     MODE3   5*MHZ    5*MHZ
 SPIDEV baro2          SPI1 DEVID1  BARO2_CS     MODE3   5*MHZ    5*MHZ
-SPIDEV osd            SPI1 DEVID2  AT7456_CS    MODE0  10*MHZ   10*MHZ
-SPIDEV ramtron        SPI2 DEVID2  FRAM_CS      MODE3   8*MHZ    8*MHZ 
-SPIDEV sdcard         SPI2 DEVID3  FLASH_CS     MODE0 400*KHZ   10*MHZ
+# SPIDEV osd            SPI1 DEVID2  AT7456_CS    MODE0  10*MHZ   10*MHZ
+# SPIDEV ramtron        SPI2 DEVID2  FRAM_CS      MODE3   8*MHZ    8*MHZ 
+SPIDEV sdcard         SPI2 DEVID3  FLASH_CS     MODE0   400*KHZ   10*MHZ
 
 
 # four IMUs, adi16740 is used, then imu3 will be removed
@@ -214,9 +214,11 @@ define HAL_OS_FATFS_IO 1
 define HAL_BOARD_LOG_DIRECTORY "/APM/LOGS"
 define HAL_BOARD_TERRAIN_DIRECTORY "/APM/TERRAIN"
 
-# enable RAMTROM parameter storage
-define HAL_STORAGE_SIZE 32768
-define HAL_WITH_RAMTRON 1
+define HAL_USE_EMPTY_STORAGE 1
+define HAL_STORAGE_SIZE 16384
+# use last 2 pages for flash storage
+# H743 has 16 pages of 128k each
+STORAGE_FLASH_PAGE 14
 
 # allow to have have a dedicated safety switch pin
 define HAL_HAVE_SAFETY_SWITCH 1
@@ -224,9 +226,9 @@ PC13 LED_SAFETY OUTPUT
 PE4  SAFETY_IN INPUT PULLDOWN
 
 # setup for OSD
-define OSD_ENABLED 1
-define HAL_OSD_TYPE_DEFAULT 1
-ROMFS_WILDCARD libraries/AP_OSD/fonts/font*.bin
+# define OSD_ENABLED 1
+# define HAL_OSD_TYPE_DEFAULT 1
+# ROMFS_WILDCARD libraries/AP_OSD/fonts/font*.bin
 
 DMA_PRIORITY  SPI1* SPI3* TIM*UP*
 DMA_NOSHARE  SPI1* TIM*UP* 
