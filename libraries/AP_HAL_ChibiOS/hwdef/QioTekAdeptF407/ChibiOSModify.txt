@@ -12,3 +12,8 @@ line 938
 origin
 #define CCMDATARAM_BASE       0x10000000U *!< CCM(core coupled memory) data RAM(64 KB) base address in the alias region  */                                           */
 #define CCMDATARAM_END        0x1000FFFFU /*!< CCM data RAM end address                                                   */
+
+仓库地址：广东省佛山市南海区里水镇白岗圣城物流园天祥物业厂
+房2 栋丰龙华货运公司
+仓库办单中心业务电话：0757-85118959/13360005988/13360025728
+报关资料及询价联系人:韩小姐13360576808

@@ -3,7 +3,9 @@
 #include "AP_RangeFinder_Benewake_CAN.h"
 
 #if HAL_MAX_CAN_PROTOCOL_DRIVERS
+using namespace AP_HAL;
 
+extern const AP_HAL::HAL &hal;
 const AP_Param::GroupInfo AP_RangeFinder_Benewake_CAN::var_info[] = {
 
     // @Param: RECV_ID
@@ -82,15 +84,27 @@ bool AP_RangeFinder_Benewake_CAN::handle_frame(AP_HAL::CANFrame &frame)
     }
     last_recv_id = id;
 
-    const uint16_t dist_cm = (frame.data[1]<<8) | frame.data[0];
-    const uint16_t snr = (frame.data[3]<<8) | frame.data[2];
-    if (snr_min != 0 && snr < uint16_t(snr_min.get())) {
+    const uint16_t dist_cm = (frame.data[5]);
+    const uint16_t cksum = (frame.data[3]+frame.data[4]+frame.data[5]+frame.data[6]) ;
+    
+    if ((cksum) == frame.data[7]) {
         // too low signal strength
+        _distance_sum_cm += dist_cm ;
+        _distance_count++;
         return true;
     }
-    _distance_sum_cm += dist_cm;
-    _distance_count++;
-    return true;
+
+    // hal.console->printf("d0 0x%02hhx \n", frame.data[0]); //5A
+    // hal.console->printf("d1 0x%02hhx \n", frame.data[1]); //A5
+    // hal.console->printf("d2 0x%02hhx \n", frame.data[2]); //len
+    // hal.console->printf("d3 0x%02hhx \n", frame.data[3]); //0xf3 can_l
+    // // hal.console->printf("d1 %f \n", _distance_sum_cm);
+    // hal.console->printf("d4 0x%02hhx \n", frame.data[4]); //0x00 can_h
+    // hal.console->printf("d5 0x%02hhx \n", frame.data[5]); //0x3f dbf
+    // hal.console->printf("d6 0x%02hhx \n", frame.data[6]); //0x00 resv
+    // hal.console->printf("d7 0x%02hhx \n", frame.data[7]); //0x32 cksum 0xf3+0x00+0x3f=0x32
+
+    return false;
 }
 
 // handle frames from CANSensor, passing to the drivers
